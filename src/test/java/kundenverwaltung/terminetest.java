@@ -28,7 +28,7 @@ public class terminetest {
     Kunde kunde2 = new Kunde("Gantzert", "Sega", "Auf der Schmelz", "27", "64380");
     Kunde kunde3 = new Kunde("Jüttner", "Thomas", "Lessingstraße", "9", "64283");
 
-    @Test
+/*    @Test
     public void testeerstelleDatum() {
         termin1.erstelleDatum("04 April 2020 14:10");
         System.out.println(termin1.pattern);
@@ -44,21 +44,21 @@ public class terminetest {
         System.out.println(termin1.m.get(kunde));
         System.out.println(kunde2.getName());
         System.out.println(termin1.m.get(kunde2));
-    }
+    }*/
 
     @Test
     public void testeterminerstellenAlt() {
-        termin1.terminErstellenAlt(kunde, date);
-        termin1.terminErstellenAlt(kunde, date2);
-        termin1.terminErstellenAlt(kunde2, date3);
+        termin1.terminErstellen(kunde, date);
+        termin1.terminErstellen(kunde, date2);
+        termin1.terminErstellen(kunde2, date3);
 
 
        // termin1.terminErstellen2(kunde3, date3);
         //System.out.println(kunde.date);
         System.out.println(kunde.getName());
-        System.out.println(termin1.kunden);
+        System.out.println(termin1.terminListe);
         System.out.println(kunde2.getName());
-        System.out.println(termin2.kunden.values());
+        System.out.println(termin2.terminListe.values());
 
     }
 
