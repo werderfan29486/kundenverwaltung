@@ -12,7 +12,14 @@ public class kundenservicetest {
     Kunde kunde2 = new Kunde("Schwarck", "Alex", "Fuchsenhütte", "27", "64380");
     Kunde kunde3 = new Kunde("Jüttner", "Thomas", "Lessingstraße", "9", "64283");
     Kunde kunde4 = new Kunde("Schwarck", "Martin", "Keineahnung", "11", "64380");
-
+    Kunde kunde5 = new Kunde("Gantzert", "Sebastian", "Auf der Schmelz", "30", "64380");
+    Kunde kunde6 = new Kunde("Schwarck", "Alex", "Fuchsenhütte", "27", "64380");
+    Kunde kunde7 = new Kunde("Jüttner", "Thomas", "Lessingstraße", "9", "64283");
+    Kunde kunde8 = new Kunde("Schwarck", "Martin", "Keineahnung", "11", "64380");
+    Kunde kunde9 = new Kunde("Gantzert", "Sebastian", "Auf der Schmelz", "30", "64380");
+    Kunde kunde10 = new Kunde("Schwarck", "Alex", "Fuchsenhütte", "27", "64380");
+    Kunde kunde11= new Kunde("Jüttner", "Thomas", "Lessingstraße", "9", "64283");
+    Kunde kunde12= new Kunde("Schwarck", "Martin", "Keineahnung", "11", "64380");
     Kundenservice kundenservice = new Kundenservice();
 
     @Test
@@ -77,9 +84,16 @@ public class kundenservicetest {
     public void testallekunden() {
         kundenservice.anlegen(kunde1);
         kundenservice.anlegen(kunde2);
-        kundenservice.löschen(kunde2);
         kundenservice.anlegen(kunde3);
         kundenservice.anlegen(kunde4);
+        kundenservice.anlegen(kunde5);
+        kundenservice.anlegen(kunde6);
+        kundenservice.anlegen(kunde7);
+        kundenservice.anlegen(kunde8);
+        kundenservice.anlegen(kunde9);
+        kundenservice.anlegen(kunde10);
+        kundenservice.anlegen(kunde11);
+        kundenservice.anlegen(kunde12);
         kundenservice.allekunden();
     }
 

@@ -76,7 +76,7 @@ public class Kundenservice {
     public void allekunden() {
         for (int i = 0; i < kundenliste.size(); i++) {
             Kunde kunde1 = kundenliste.get(i);
-            System.out.println("ID: " + kunde1.getId());
+            System.out.println("Kundennummer " + kunde1.getKundennummer());
             System.out.println("Name: " + kunde1.getName());
             System.out.println("Vorname: " + kunde1.getVorname());
             System.out.println("Straße: " + kunde1.getStrasse());
