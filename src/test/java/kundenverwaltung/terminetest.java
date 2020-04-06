@@ -10,19 +10,7 @@ import java.util.List;
 
 public class terminetest {
 
-    List<Date> terminliste = new ArrayList<>();
     Termine termin1 = new Termine();
-    Termine termin2 = new Termine();
-
-    //neues Datenformat genutzt in terminErstellenNeu
-    String pattern = "dd MMMM yyyy hh:mm";
-    SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
-    String date1 = simpleDateFormat.format(new Date());
-
-    //altes Datenformat genutzt in terminErstellenAlt
-    Date date = new Date(2020, 10, 10);
-    Date date2 = new Date(2018, 9, 8);
-    Date date3 = new Date(2017, 12, 7);
 
     Kunde kunde = new Kunde("Schwarck", "Alex", "An der Fuchsenhütte", "27", "64380");
     Kunde kunde2 = new Kunde("Gantzert", "Sega", "Auf der Schmelz", "27", "64380");
