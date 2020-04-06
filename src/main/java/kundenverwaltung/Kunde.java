@@ -5,15 +5,18 @@ public class Kunde {
 
     final String uuid = UUID.randomUUID().toString().replace("-", "");
     private String id;
+    private int kundennummer;
     private String name;
     private String vorname;
     private String strasse;
     private String hausnummer;
     private String plz;
+    private static int count = 0;
 
     public Kunde(String name, String vorname, String strasse, String hausnummer, String plz) {
 
         this.id = uuid;
+        this.kundennummer = ++count;
         this.name = name;
         this.vorname = vorname;
         this.strasse = strasse;
@@ -45,6 +48,8 @@ public class Kunde {
     public String getId() {
         return id;
     }
+
+    public int getKundennummer() {return kundennummer;}
 
     public String getName() {
         return name;

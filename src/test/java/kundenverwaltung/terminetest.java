@@ -67,5 +67,12 @@ public class terminetest {
         System.out.println(termin1.terminliste.get(kunde2));
     }
 
+    @Test
+    public void testeTermineGesamt() {
+        termin1.terminErstellen(kunde, "20. Juni");
+        termin1.terminErstellen(kunde, "23. August");
+        System.out.println(termin1.termineGesamt(kunde));
+    }
+
 
 }

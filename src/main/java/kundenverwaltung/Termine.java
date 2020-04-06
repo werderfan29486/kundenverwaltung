@@ -81,6 +81,10 @@ public class Termine {
         System.out.println("Terminliste: " + kundentermine.get(kunde));
     }
 
+    public int termineGesamt(Kunde kunde) {
+        return kundentermine.get(kunde).size();
+    }
+
 
 
     public void TerminErstellenNeu(Kunde kunde, String datum) {
