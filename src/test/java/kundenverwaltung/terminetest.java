@@ -51,6 +51,7 @@ public class terminetest {
         termin1.terminErstellen(kunde, date);
         termin1.terminErstellen(kunde, date2);
         termin1.terminErstellen(kunde2, date3);
+        termin1.terminErstellen(kunde2, date);
 
 
        // termin1.terminErstellen2(kunde3, date3);
