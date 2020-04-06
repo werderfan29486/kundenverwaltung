@@ -46,21 +46,39 @@ public class Termine {
         if (kundentermine.isEmpty()) {
             System.out.println("Terminliste ist leer");
         }
-         else (!kundentermine.isEmpty()) {
+         else {
             for (Map.Entry<Kunde, List<String>> entry : kundentermine.entrySet()) {
                 if (entry.getKey().uuid != kunde.uuid) {
                     System.out.println("Kunde " + kunde.getName() + " nicht in der Terminliste");
-                } else if (entry.getKey().uuid.equals(kunde.uuid)) {
-                    kundentermine.remove(datum);
+                } else {
+                    entry.getValue().remove(datum);
                     System.out.println("Termin am " + datum + " für Kunde " + kunde.getName() + " gelöscht");
                 }
             }
         }
     }
 
-    public void druckeTermine(Kunde kunde, Termine termin) {
-        System.out.println(kunde.getName());
-        System.out.println(termin.kundentermine.get(kunde));
+
+    public void terminÄndern(Kunde kunde, String datum, String neuesDatum) {
+        if (kundentermine.isEmpty()) {
+            System.out.println("keine Termine zum Ändern vorhanden");
+        }
+        else  {
+            for (Map.Entry<Kunde, List<String>> entry : kundentermine.entrySet()) {
+                if (entry.getKey().uuid != kunde.uuid) {
+                    System.out.println("Kunde " + kunde.getName() + " nicht in der Terminliste");
+                }  else  {
+                    terminLöschen(kunde, datum);
+                    terminErstellen(kunde, neuesDatum);
+                }
+            }
+        }
+    }
+
+    public void druckeTermine(Kunde kunde) {
+        System.out.println("Kunde: " + kunde.getVorname() + " " + kunde.getName() + " hat insgesamt");
+        System.out.println(kundentermine.get(kunde).size() + " Termine");
+        System.out.println("Terminliste: " + kundentermine.get(kunde));
     }
 
 
