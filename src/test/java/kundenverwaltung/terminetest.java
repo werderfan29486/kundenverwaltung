@@ -11,20 +11,6 @@ public class terminetest {
     Kunde kunde2 = new Kunde("Gantzert", "Sega", "Auf der Schmelz", "27", "64380");
     Kunde kunde3 = new Kunde("Jüttner", "Thomas", "Lessingstraße", "9", "64283");
 
-    @Test
-    public void testeDruckeTermine() {
-        termin1.terminErstellen(kunde, "20. Juni");
-        termin1.druckeTermine(kunde, termin1);
-    }
-
-    @Test
-
-    public void terminLöschen() {
-        termin1.terminErstellen(kunde, "20. Juni");
-        termin1.terminErstellen(kunde, "30. April");
-        termin1.terminLöschen(kunde2, "20.Juni");
-        termin1.terminLöschen(kunde, "30. April");
-    }
 
     @Test
     public void testeTerminErstellen() {
@@ -37,10 +23,35 @@ public class terminetest {
         termin1.terminErstellen(kunde3, "15. März");
         termin1.terminErstellen(kunde3, "30. März");
         termin1.terminErstellen(kunde3, "30. August");
-        termin1.druckeTermine(kunde, termin1);
-        termin1.druckeTermine(kunde2, termin1);
-        termin1.druckeTermine(kunde3, termin1);
+        termin1.druckeTermine(kunde);
+        termin1.druckeTermine(kunde2);
+        termin1.druckeTermine(kunde3);
 
+    }
+
+    @Test
+
+    public void testeTerminLöschen() {
+        termin1.terminErstellen(kunde, "20. Juni");
+        termin1.terminErstellen(kunde, "30. April");
+        termin1.terminErstellen(kunde, "10. April");
+        termin1.terminLöschen(kunde2, "20.Juni");
+        termin1.terminLöschen(kunde, "30. April");
+        termin1.druckeTermine(kunde);
+    }
+
+    @Test
+    public void testeTerminÄndern() {
+        termin1.terminErstellen(kunde, "20. Juni");
+        termin1.terminErstellen(kunde, "30. April");
+        termin1.terminÄndern(kunde, "20. Juni", "21.Juni");
+        termin1.druckeTermine(kunde);
+    }
+
+    @Test
+    public void testeDruckeTermine() {
+        termin1.terminErstellen(kunde, "20. Juni");
+        termin1.druckeTermine(kunde);
     }
 
     @Test
