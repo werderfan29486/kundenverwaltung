@@ -13,7 +13,6 @@ public class Kunde {
     private String hausnummer;
     private String plz;
     private static int count = 0;
-    String formatValue = String.format("%04d", count);
 
     public Kunde(String name, String vorname, String strasse, String hausnummer, String plz) {
 
