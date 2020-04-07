@@ -82,7 +82,7 @@ public class Termine {
     }
 
     public int termineGesamt(Kunde kunde) {
-        System.out.print(kundentermine.get(kunde).size());
+        //System.out.print(kundentermine.get(kunde).size());
         return kundentermine.get(kunde).size();
 
     }

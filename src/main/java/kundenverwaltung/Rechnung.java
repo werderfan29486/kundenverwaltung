@@ -35,8 +35,8 @@ public class Rechnung {
     }
 
     public void rechnungBezahlt(Kunde kunde, Termine kundentermine) {
-        konto.kontostand += errechneGesamtBetrag(kunde, kundentermine);
-        System.out.print(konto.getKontostand());
+       konto.kontostand += errechneGesamtBetrag(kunde, kundentermine);
+        System.out.println("Kontostand " + konto.getKontostand());
         kundentermine.kundentermine.get(kunde).clear();
     }
 

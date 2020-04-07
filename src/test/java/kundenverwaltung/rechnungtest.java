@@ -14,9 +14,8 @@ public class rechnungtest {
     @Test
     public void testeErrechneGesamtBetrag() {
         terminliste.terminErstellen(kunde, "20. Januar");
-        terminliste.terminErstellen(kunde, "31. März");
-        terminliste.terminErstellen(kunde, "20. Oktober");
-        System.out.println(rechnung1.errechneGesamtBetrag(kunde, terminliste));
+        terminliste.terminErstellen(kunde, "19. Mai");
+        terminliste.terminErstellen(kunde, "21. November");
         terminliste.terminLöschen(kunde, "20. Januar");
         System.out.println(rechnung1.errechneGesamtBetrag(kunde, terminliste));
     }
@@ -33,14 +32,13 @@ public class rechnungtest {
     public void testeRechnungBezahlt() {
         terminliste.terminErstellen(kunde, "20. Januar");
         terminliste.terminErstellen(kunde, "31. März");
-       // terminliste.terminErstellen(kunde2, "24. Februar");
+        terminliste.terminErstellen(kunde, "24. Februar");
         //terminliste.termineGesamt(kunde);
         rechnung1.rechnungBezahlt(kunde, terminliste);
         //System.out.print(terminliste.termineGesamt(kunde));
         //rechnung1.rechnungBezahlt(kunde2,terminliste);
-      // terminliste.terminErstellen(kunde, "20. Januar");
-
-      // rechnung1.rechnungBezahlt(kunde, terminliste);
+      terminliste.terminErstellen(kunde, "20. Januar");
+      rechnung1.rechnungBezahlt(kunde, terminliste);
     }
 
 
