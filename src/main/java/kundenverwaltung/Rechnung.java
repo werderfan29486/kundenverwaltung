@@ -7,7 +7,7 @@ public class Rechnung {
     private int stundenpreis = 80;
     private double halberstundenpreis = 40.00;
     private int anzahlStunden;
-    private static String rechnungsnummer;
+    private String rechnungsnummer;
     private static int count = 0;
 
     Konto konto = new Konto();
@@ -36,7 +36,9 @@ public class Rechnung {
 
     public void rechnungBezahlt(Kunde kunde, Termine kundentermine) {
        konto.kontostand += errechneGesamtBetrag(kunde, kundentermine);
-        System.out.println("Kontostand " + konto.getKontostand());
+        System.out.println("Kunde " + kunde.getName() + " hat Rechnung bezahlt");
+        System.out.println("Betrag: " + errechneGesamtBetrag(kunde, kundentermine) + " Rechnungsnummer: " + rechnungsnummer);
+        System.out.println("Neuer Kontostand " + konto.getKontostand());
         kundentermine.kundentermine.get(kunde).clear();
     }
 

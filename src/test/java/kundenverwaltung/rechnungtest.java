@@ -25,19 +25,22 @@ public class rechnungtest {
         terminliste.terminErstellen(kunde, "20. Januar");
         terminliste.terminErstellen(kunde, "31. März");
         terminliste.terminErstellen(kunde, "20. Oktober");
+        terminliste.terminErstellen(kunde2, "30. April");
         rechnung1.generiereRechnung(kunde, terminliste);
+        rechnung1.generiereRechnung(kunde2, terminliste);
     }
 
-    @Test
+    @Test   //warum wird die Rechnungsnummer nicht hochgezählt?
     public void testeRechnungBezahlt() {
         terminliste.terminErstellen(kunde, "20. Januar");
         terminliste.terminErstellen(kunde, "31. März");
-        terminliste.terminErstellen(kunde, "24. Februar");
+        terminliste.terminErstellen(kunde2, "24. Februar");
         //terminliste.termineGesamt(kunde);
         rechnung1.rechnungBezahlt(kunde, terminliste);
         //System.out.print(terminliste.termineGesamt(kunde));
         //rechnung1.rechnungBezahlt(kunde2,terminliste);
       terminliste.terminErstellen(kunde, "20. Januar");
+      rechnung1.rechnungBezahlt(kunde2, terminliste);
       rechnung1.rechnungBezahlt(kunde, terminliste);
     }
 

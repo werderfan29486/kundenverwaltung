@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class kundenservicetest {
 
@@ -26,6 +27,14 @@ public class kundenservicetest {
     public void testkundenanlegen() {
         kundenservice.anlegen(kunde1);
         System.out.print(kundenservice.kundenliste);
+    }
+
+    @Test   //Endlosschleife?
+    public void testeScanner() {
+        Scanner scanner = new Scanner(System.in);
+        Kunde kunde = Kunde.createFromScanner(scanner);
+        scanner.next();
+        kunde.getName();
     }
 
     @Test

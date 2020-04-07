@@ -1,4 +1,5 @@
 package kundenverwaltung;
+import java.util.Scanner;
 import java.util.UUID;
 import java.text.DecimalFormat;
 
@@ -14,8 +15,8 @@ public class Kunde {
     private String plz;
     private static int count = 0;
 
-    public Kunde(String name, String vorname, String strasse, String hausnummer, String plz) {
 
+    public Kunde(String name, String vorname, String strasse, String hausnummer, String plz) {
         this.id = uuid;
         ++count;
         String formatValue = String.format("%04d", count);
@@ -25,6 +26,15 @@ public class Kunde {
         this.strasse = strasse;
         this.hausnummer = hausnummer;
         this.plz = plz;
+    }
+
+    public static Kunde createFromScanner(final Scanner scanner) {
+        String name = scanner.next();
+        String vorname = scanner.next();
+        String strasse = scanner.next();
+        String hausnummer = scanner.next();
+        String plz = scanner.next();
+        return new Kunde(name, vorname, strasse, hausnummer, plz);
     }
 
     public void setName(String name) {
