@@ -1,77 +1,66 @@
 package kundenverwaltung;
 
+import customerManagementSoftware.Customer;
+import customerManagementSoftware.Dates;
 import org.junit.jupiter.api.Test;
 
 
 public class terminetest {
 
-    Termine termin1 = new Termine();
+    Dates listOfDates1 = new Dates();
 
-    Kunde kunde = new Kunde("Schwarck", "Alex", "An der Fuchsenhütte", "27", "64380");
-    Kunde kunde2 = new Kunde("Gantzert", "Sega", "Auf der Schmelz", "27", "64380");
-    Kunde kunde3 = new Kunde("Jüttner", "Thomas", "Lessingstraße", "9", "64283");
+    Customer customer = new Customer("Schwarck", "Alex", "An der Fuchsenhütte", "27", "64380");
+    Customer customer2 = new Customer("Gantzert", "Sega", "Auf der Schmelz", "27", "64380");
+    Customer customer3 = new Customer("Jüttner", "Thomas", "Lessingstraße", "9", "64283");
 
 
     @Test
-    public void testeTerminErstellen() {
-        termin1.terminErstellen(kunde, "20. Juni");
-        termin1.terminErstellen(kunde, "30. August");
-        termin1.terminErstellen(kunde, "10. August");
-        termin1.terminErstellen(kunde2, "15. März");
-        termin1.terminErstellen(kunde2, "30. März");
-        termin1.terminErstellen(kunde2, "30. August");
-        termin1.terminErstellen(kunde3, "15. März");
-        termin1.terminErstellen(kunde3, "30. März");
-        termin1.terminErstellen(kunde3, "30. August");
-        termin1.druckeTermine(kunde);
-        termin1.druckeTermine(kunde2);
-        termin1.druckeTermine(kunde3);
+    public void testAddCustomerDate() {
+        listOfDates1.addCustomerDate(customer, "20. Juni");
+        listOfDates1.addCustomerDate(customer, "30. August");
+        listOfDates1.addCustomerDate(customer, "10. August");
+        listOfDates1.addCustomerDate(customer2, "15. März");
+        listOfDates1.addCustomerDate(customer2, "30. März");
+        listOfDates1.addCustomerDate(customer2, "30. August");
+        listOfDates1.addCustomerDate(customer3, "15. März");
+        listOfDates1.addCustomerDate(customer3, "30. März");
+        listOfDates1.addCustomerDate(customer3, "30. August");
+        listOfDates1.printCustomerDates(customer);
+        listOfDates1.printCustomerDates(customer2);
+        listOfDates1.printCustomerDates(customer3);
 
     }
 
     @Test
 
-    public void testeTerminLöschen() {
-        termin1.terminErstellen(kunde, "20. Juni");
-        termin1.terminErstellen(kunde, "30. April");
-        termin1.terminErstellen(kunde, "10. April");
-        termin1.terminLöschen(kunde2, "20.Juni");
-        termin1.terminLöschen(kunde, "30. April");
-        termin1.druckeTermine(kunde);
+    public void testDeleteDate() {
+        listOfDates1.addCustomerDate(customer, "20. Juni");
+        listOfDates1.addCustomerDate(customer, "30. April");
+        listOfDates1.addCustomerDate(customer, "10. April");
+        listOfDates1.deleteCustomerDate(customer2, "20.Juni");
+        listOfDates1.deleteCustomerDate(customer, "30. April");
+        listOfDates1.printCustomerDates(customer);
     }
 
     @Test
-    public void testeTerminÄndern() {
-        termin1.terminErstellen(kunde, "20. Juni");
-        termin1.terminErstellen(kunde, "30. April");
-        termin1.terminÄndern(kunde, "20. Juni", "21.Juni");
-        termin1.druckeTermine(kunde);
+    public void testChangeCustomerDate() {
+        listOfDates1.addCustomerDate(customer, "20. Juni");
+        listOfDates1.addCustomerDate(customer, "30. April");
+        listOfDates1.changeCustomerDate(customer, "20. Juni", "21.Juni");
+        listOfDates1.printCustomerDates(customer);
     }
 
     @Test
-    public void testeDruckeTermine() {
-        termin1.terminErstellen(kunde, "20. Juni");
-        termin1.druckeTermine(kunde);
+    public void testPrintCustomerDates() {
+        listOfDates1.addCustomerDate(customer, "20. Juni");
+        listOfDates1.printCustomerDates(customer);
     }
 
     @Test
-    public void testeTerminErstellenNeu() {
-        termin1.TerminErstellenNeu(kunde, "20 Mai 2020 16:00");
-        termin1.TerminErstellenNeu(kunde, "17 Juni 2030 14:00");
-        termin1.TerminErstellenNeu(kunde2, "18 September 2010 17:00");
-        termin1.TerminErstellenNeu(kunde3, "09 Januar 2009 20:00");
-        System.out.println(termin1.terminliste);
-        System.out.println(kunde.getName());
-        System.out.println(termin1.terminliste.get(kunde));
-        System.out.println(kunde2.getName());
-        System.out.println(termin1.terminliste.get(kunde2));
-    }
-
-    @Test
-    public void testeTermineGesamt() {
-        termin1.terminErstellen(kunde, "20. Juni");
-        termin1.terminErstellen(kunde, "23. August");
-        System.out.println(termin1.termineGesamt(kunde));
+    public void testNumberOfDates() {
+        listOfDates1.addCustomerDate(customer, "20. Juni");
+        listOfDates1.addCustomerDate(customer, "23. August");
+        System.out.println(listOfDates1.numberOfDates(customer));
     }
 
 
