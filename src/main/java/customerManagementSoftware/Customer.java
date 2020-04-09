@@ -43,25 +43,39 @@ public class Customer {
 
            //Hausnummer
           String housenumber;
-           System.out.println("Hausnummer: ");
-           do {
-              housenumber = scanner.next(); // this is important!
-              System.out.println("Bitte 1-3 stellige Zahl eingeben");
-          } while (! housenumber.matches("[0-9]{1,3}"));
+          boolean house = true;
+          do {
+              if (house) {
+                  System.out.println("Hausnummer: ");
+                  housenumber = scanner.next();
+                  house = false;
+              } else {
+                  System.out.println("Bitte eine Zahl zwischen 1 und 3 Ziffern eingeben");
+                  housenumber = scanner.next();
+              }
+          }
+          while (! housenumber.matches("[0-9]{1,3}"));
 
            //PLZ
           String postalcode;
-
+          boolean postal = true;
           do {
-              System.out.println("Postleitzahl: ");
-              postalcode = scanner.next();
-              System.out.println("Bitte 5 stellige Zahl eingeben!");
+              if (postal) {
+                  System.out.println("Postleitzahl: ");
+                  postalcode = scanner.next();
+                  postal = false;
+              }
+              else {
+                  System.out.println("Bitte eine 5-stellige Zahl eingeben");
+                  postalcode = scanner.next();
+              }
           }
           while (! postalcode.matches("[0-9]{5}"));
 
 
            return new Customer(name, prename, street, housenumber, postalcode);
       }
+
         catch (InputMismatchException e)  {
             System.err.println("Falsche Eingabe. Bitte wiederholen");
             scanner.nextLine();
