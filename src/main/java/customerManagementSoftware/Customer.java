@@ -1,4 +1,5 @@
 package customerManagementSoftware;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.util.UUID;
 
@@ -8,40 +9,74 @@ public class Customer {
     private String id;
     private String customernumber;
     private String name;
-    private String prename;
+    private String firstname;
     private String street;
     private String housenumber;
     private String postalcode;
     private static int count = 0;
 
 
-    public Customer(String name, String prename, String street, String housenumber, String postalcode) {
+    public Customer(String name, String firstname, String street, String housenumber, String postalcode) {
         this.id = uuid;
         ++count;
         String formatValue = String.format("%04d", count);
         this.customernumber = formatValue;
         this.name = name;
-        this.prename = prename;
+        this.firstname = firstname;
         this.street = street;
         this.housenumber = housenumber;
         this.postalcode = postalcode;
     }
 
     public static Customer createFromScanner(final Scanner scanner) {
-        String name = scanner.next();
-        String prename = scanner.next();
-        String street = scanner.next();
-        String housenumber = scanner.next();
-        String postalcode = scanner.next();
-        return new Customer(name, prename, street, housenumber, postalcode);
+
+
+      try {
+
+           System.out.println("Bitte Kundendaten eingeben: ");
+           System.out.println("Nachname: ");
+           String name = scanner.next();
+           System.out.println("Vorname: ");
+           String prename = scanner.next();
+           System.out.println("Straße: ");
+           String street = scanner.next();
+
+           //Hausnummer
+          String housenumber;
+           System.out.println("Hausnummer: ");
+           do {
+              housenumber = scanner.next(); // this is important!
+              System.out.println("Bitte 1-3 stellige Zahl eingeben");
+          } while (! housenumber.matches("[0-9]{1,3}"));
+
+           //PLZ
+          String postalcode;
+
+          do {
+              System.out.println("Postleitzahl: ");
+              postalcode = scanner.next();
+              System.out.println("Bitte 5 stellige Zahl eingeben!");
+          }
+          while (! postalcode.matches("[0-9]{5}"));
+
+
+           return new Customer(name, prename, street, housenumber, postalcode);
+      }
+        catch (InputMismatchException e)  {
+            System.err.println("Falsche Eingabe. Bitte wiederholen");
+            scanner.nextLine();
+            createFromScanner(scanner);
+            return null;
+        }
+
     }
 
     public void setName(String name) {
         this.name = name;
     }
 
-    public void setPrename(String prename) {
-        this.prename = prename;
+    public void setFirstname(String firstname) {
+        this.firstname = firstname;
     }
 
     public void setStreet(String street) {
@@ -67,8 +102,8 @@ public class Customer {
         return name;
     }
 
-    public String getPrename() {
-        return prename;
+    public String getFirstname() {
+        return firstname;
     }
 
     public String getStreet() {

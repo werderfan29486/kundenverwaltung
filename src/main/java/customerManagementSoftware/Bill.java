@@ -20,7 +20,7 @@ public class Bill {
 
     public void generateBill(Customer customer, Dates listOfDates) {
         System.out.println("Rechnungsnummer: " + billNumber);
-        System.out.println("Kundennummer:   " + customer.getCustomernumber() + "              Name: " + customer.getPrename() + " " + customer.getName());
+        System.out.println("Kundennummer:   " + customer.getCustomernumber() + "              Name: " + customer.getFirstname() + " " + customer.getName());
         numberOfHours = listOfDates.numberOfDates(customer);
         System.out.println("-----------------------------------------------------");
         System.out.println("Anzahl der Stunden:                               " + numberOfHours);

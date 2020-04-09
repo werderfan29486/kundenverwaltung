@@ -1,9 +1,5 @@
-package kundenverwaltung;
+package customerManagementSoftware;
 
-import customerManagementSoftware.Customer;
-import customerManagementSoftware.Dates;
-import customerManagementSoftware.Account;
-import customerManagementSoftware.Bill;
 import org.junit.jupiter.api.Test;
 
 public class rechnungtest {

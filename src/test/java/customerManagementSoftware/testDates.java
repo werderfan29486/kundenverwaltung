@@ -1,11 +1,9 @@
-package kundenverwaltung;
+package customerManagementSoftware;
 
-import customerManagementSoftware.Customer;
-import customerManagementSoftware.Dates;
 import org.junit.jupiter.api.Test;
 
 
-public class terminetest {
+public class testDates {
 
     Dates listOfDates1 = new Dates();
 

@@ -23,8 +23,8 @@ public class Customerservice {
                     if (customer1.getPostalcode() != customer.getPostalcode()) {
                         customer1.setPostalcode(customer.getPostalcode());
                     }
-                    if (customer1.getPrename() != customer.getPrename()) {
-                        customer1.setPrename(customer.getPostalcode());
+                    if (customer1.getFirstname() != customer.getFirstname()) {
+                        customer1.setFirstname(customer.getFirstname());
                     }
                     if (customer1.getStreet() != customer.getStreet()) {
                         customer1.setStreet(customer.getStreet());
@@ -40,7 +40,7 @@ public class Customerservice {
         public void printCustomerData(Customer customer) {
             System.out.println("Kunde mit der ID: " + customer.getId());
             System.out.println("Name: " + customer.getName());
-            System.out.println("Vorname " + customer.getPrename());
+            System.out.println("Vorname " + customer.getFirstname());
             System.out.println("Straße: " + customer.getStreet());
             System.out.println("Hausnummer " + customer.getHousenumber());
             System.out.println("Plz:  " + customer.getPostalcode());
@@ -51,14 +51,14 @@ public class Customerservice {
             Customer customer1 = customerList.get(i);
             if (customer1.getName() == searchterm) {
                 printCustomerData(customer1);
-            } else if (customer1.getPrename() == searchterm) {
+            } else if (customer1.getFirstname() == searchterm) {
                 printCustomerData(customer1);
             } else if (customer1.getStreet() == searchterm) {
                 printCustomerData(customer1);
             } else if (customer1.getPostalcode() == searchterm) {
                 printCustomerData(customer1);
             } else if (customer1.getHousenumber() == searchterm) {
-                printCustomerData(customer1);
+               // printCustomerData(customer1);
             }
 
         }
@@ -78,7 +78,7 @@ public class Customerservice {
             Customer customer1 = customerList.get(i);
             System.out.println("Kundennummer " + customer1.getCustomernumber());
             System.out.println("Name: " + customer1.getName());
-            System.out.println("Vorname: " + customer1.getPrename());
+            System.out.println("Vorname: " + customer1.getFirstname());
             System.out.println("Straße: " + customer1.getStreet());
             System.out.println("Hausnummer: " + customer1.getHousenumber());
             System.out.println("PLZ: " + customer1.getPostalcode());

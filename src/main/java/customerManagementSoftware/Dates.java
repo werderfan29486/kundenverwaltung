@@ -67,7 +67,7 @@ public class Dates {
     }
 
     public void printCustomerDates(Customer customer) {
-        System.out.println("Kunde: " + customer.getPrename() + " " + customer.getName() + " hat insgesamt");
+        System.out.println("Kunde: " + customer.getFirstname() + " " + customer.getName() + " hat insgesamt");
         System.out.println(customerDates.get(customer).size() + " Termine");
         System.out.println("Terminliste: " + customerDates.get(customer));
     }
