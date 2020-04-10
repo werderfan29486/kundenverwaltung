@@ -35,92 +35,13 @@ public class Customer {
 
            System.out.println("Bitte Kundendaten eingeben: ");
 
-          //name
-          String name;
-          boolean nameIsTrue = true;
+            String name = name();
+            String firstName = firstName();
+            String street = street();
+            String houseNumber = houseNumber();
+            String postalCode = postalCode();
 
-          do {
-
-              if (nameIsTrue) {
-                  System.out.println("Nachname ");
-                  name = scanner.next();
-                  nameIsTrue = false;
-              } else {
-                  System.out.println("Bitte nur Buchstaben eingeben: ");
-                  name = scanner.next();
-              }
-          }
-          while (! name.matches("[A-Z, a-z]+"));
-
-
-          //firstName
-          String firstname;
-          boolean firstNameIsTrue = true;
-          do {
-
-              if (firstNameIsTrue) {
-                  System.out.println("Vorname ");
-                  firstname = scanner.next();
-                  firstNameIsTrue = false;
-              } else {
-                  System.out.println("Bitte nur Buchstaben eingeben: ");
-                  firstname = scanner.next();
-              }
-          }
-          while (! firstname.matches("[A-Z, a-z]+"));
-
-
-
-
-          // Straße
-          String street;
-          boolean streetIsTrue = true;
-          do {
-
-              if (streetIsTrue) {
-                  System.out.println("Straße: ");
-                  street = scanner.next();
-                  streetIsTrue = false;
-              } else {
-                  System.out.println("Bitte nur Buchstaben eingeben: ");
-                  street = scanner.next();
-              }
-          }
-          while (! street.matches("[A-Z, a-z]+"));
-
-           //Hausnummer
-          String housenumber;
-          boolean housenumberIsTrue = true;
-          do {
-              if (housenumberIsTrue) {
-                  System.out.println("Hausnummer: ");
-                  housenumber = scanner.next();
-                  housenumberIsTrue = false;
-              } else {
-                  System.out.println("Bitte eine Zahl zwischen 1 und 3 Ziffern eingeben");
-                  housenumber = scanner.next();
-              }
-          }
-          while (! housenumber.matches("[0-9]{1,3}"));
-
-           //PLZ
-          String postalcode;
-          boolean postalIsTrue = true;
-          do {
-              if (postalIsTrue) {
-                  System.out.println("Postleitzahl: ");
-                  postalcode = scanner.next();
-                  postalIsTrue = false;
-              }
-              else {
-                  System.out.println("Bitte eine 5-stellige Zahl eingeben");
-                  postalcode = scanner.next();
-              }
-          }
-          while (! postalcode.matches("[0-9]{5}"));
-
-
-           return new Customer(name, firstname, street, housenumber, postalcode);
+            return new Customer(name, firstName, street, houseNumber, postalCode);
       }
 
         catch (InputMismatchException e)  {
@@ -130,6 +51,100 @@ public class Customer {
             return null;
         }
 
+    }
+
+    public static String name() {
+        //name
+        Scanner scanner = new Scanner(System.in);
+        String name;
+        boolean nameIsTrue = true;
+
+        do {
+            if (nameIsTrue) {
+                System.out.println("Nachname ");
+                name = scanner.next();
+                nameIsTrue = false;
+            } else {
+                System.out.println("Bitte nur Buchstaben eingeben: ");
+                name = scanner.next();
+            }
+        }
+        while (! name.matches("[A-Z, a-z]+"));
+        return name;
+    }
+
+    public static String firstName() {
+        Scanner scanner = new Scanner(System.in);
+        String firstname;
+        boolean firstNameIsTrue = true;
+        do {
+
+            if (firstNameIsTrue) {
+                System.out.println("Vorname ");
+                firstname = scanner.next();
+                firstNameIsTrue = false;
+            } else {
+                System.out.println("Bitte nur Buchstaben eingeben: ");
+                firstname = scanner.next();
+            }
+        }
+        while (! firstname.matches("[A-Z, a-z]+"));
+        return firstname;
+    }
+
+    public static String street() {
+        String street;
+        Scanner scanner = new Scanner(System.in);
+        boolean streetIsTrue = true;
+        do {
+
+            if (streetIsTrue) {
+                System.out.println("Straße: ");
+                street = scanner.next();
+                streetIsTrue = false;
+            } else {
+                System.out.println("Bitte nur Buchstaben eingeben: ");
+                street = scanner.next();
+            }
+        }
+        while (!street.matches("[A-Z, a-z]+"));
+        return street;
+    }
+
+    public static String houseNumber() {
+        String houseNumber;
+        Scanner scanner = new Scanner(System.in);
+        boolean houseNumberIsTrue = true;
+        do {
+            if (houseNumberIsTrue) {
+                System.out.println("Hausnummer: ");
+                houseNumber = scanner.next();
+                houseNumberIsTrue = false;
+            } else {
+                System.out.println("Bitte eine Zahl zwischen 1 und 3 Ziffern eingeben");
+                houseNumber = scanner.next();
+            }
+        }
+        while (!houseNumber.matches("[0-9]{1,3}"));
+        return houseNumber;
+    }
+
+    public static String postalCode() {
+        String postalCode;
+        Scanner scanner = new Scanner(System.in);
+        boolean postalIsTrue = true;
+        do {
+            if (postalIsTrue) {
+                System.out.println("Postleitzahl: ");
+                postalCode = scanner.next();
+                postalIsTrue = false;
+            } else {
+                System.out.println("Bitte eine 5-stellige Zahl eingeben");
+                postalCode = scanner.next();
+            }
+        }
+        while (!postalCode.matches("[0-9]{5}"));
+        return postalCode;
     }
 
     public void setName(String name) {

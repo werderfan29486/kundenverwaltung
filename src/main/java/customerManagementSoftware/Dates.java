@@ -49,7 +49,6 @@ public class Dates {
 
         if (customerDates.isEmpty()) {
             List<String> dates = new ArrayList<String>();
-            System.out.println("Termin für Kunde " + customer.getName() + " anlegen:");
             dates.add(date);
             customerDates.put(customer, dates);
         } else {
@@ -76,90 +75,99 @@ public class Dates {
 
 
     public String inputDate (final Scanner scanner) {
+        boolean isTrue = true;
+        String day = day(scanner, isTrue);
+        String month = month(scanner, isTrue);
+        String year = year(scanner, isTrue);
+        String hours = hours(scanner, isTrue);
+        String minutes = minutes(scanner, isTrue);
+
+            String gesamtDatum = day + "." + month + "." + year + " " + hours + ":" + minutes + " Uhr";
+            return gesamtDatum;
+    }
+
+    public static String day(Scanner scanner, boolean isTrue) {
         String day;
-        boolean dayIsTrue = true;
-
         do {
-
-            if (dayIsTrue) {
+            if (isTrue) {
                 System.out.println("Tag eingeben ");
                 day = scanner.next();
-                dayIsTrue = false;
+                isTrue = false;
             } else {
                 System.out.println("Bitte 2 Ziffern zwischen 01 und 31 eingeben: ");
                 day = scanner.next();
             }
         }
-        while (! day.matches("^(?:0*[1-9]|[12][0-9]|3[01])$"));
+        while (!day.matches("^(?:0*[1-9]|[12][0-9]|3[01])$"));
+        return day;
+    }
 
+    public static String month(Scanner scanner, boolean isTrue) {
         String month;
-        boolean monthIsTrue = true;
-
         do {
-
-            if (monthIsTrue) {
+            if (isTrue) {
                 System.out.println("Monat eingeben ");
                 month = scanner.next();
-                monthIsTrue = false;
+                isTrue = false;
             } else {
                 System.out.println("Bitte 2 Ziffern zwischen 01 und 12 eingeben: ");
                 month = scanner.next();
             }
         }
-        while (! month.matches("0*([1-9]|1[0-2])"));
+        while (!month.matches("0*([1-9]|1[0-2])"));
+        return month;
+    }
 
+    public static String year(Scanner scanner, boolean isTrue) {
         String year;
-        boolean yearIsTrue = true;
-
         do {
-
-            if (yearIsTrue) {
+            if (isTrue) {
                 System.out.println("Jahr eingeben ");
                 year = scanner.next();
-                yearIsTrue = false;
+                isTrue = false;
             } else {
                 System.out.println("Bitte eine Jahreszahl zwischen 2020 und 2099 angeben: ");
                 year = scanner.next();
             }
         }
-        while (! year.matches("0*(20[2-8][0-9]|209[0-9])"));
+        while (!year.matches("0*(20[2-8][0-9]|209[0-9])"));
+        return year;
+    }
 
+    public static String hours(Scanner scanner, boolean isTrue) {
         String hours;
-        boolean hoursIsTrue = true;
-
         do {
-
-            if (hoursIsTrue) {
+            if (isTrue) {
                 System.out.println("Stunden eingeben ");
                 hours = scanner.next();
-                hoursIsTrue = false;
+                isTrue = false;
             } else {
                 System.out.println("Bitte eine Jahreszahl zwischen 2020 und 2099 angeben: ");
                 hours = scanner.next();
             }
         }
-        while (! hours.matches("0*([0-9]|1[0-9]|2[0-3])"));
+        while (!hours.matches("0*([0-9]|1[0-9]|2[0-3])"));
+        return hours;
+    }
 
+    public static String minutes(Scanner scanner, boolean isTrue) {
         String minutes;
-        boolean minutesIsTrue = true;
-
         do {
 
-            if (minutesIsTrue) {
+            if (isTrue) {
                 System.out.println("Minuten eingeben ");
                 minutes = scanner.next();
-                minutesIsTrue = false;
+                isTrue = false;
             } else {
                 System.out.println("Bitte eine Jahreszahl zwischen 2020 und 2099 angeben: ");
                 minutes = scanner.next();
             }
         }
         while (! minutes.matches("0*([0-9]|[1-4][0-9]|5[0-9])"));
-
-            String gesamtDatum = day + "." + month + "." + year + " " + hours + ":" + minutes + " Uhr";
-            return gesamtDatum;
-
+        return minutes;
     }
+
+
 
     public void deleteCustomerDate(Customer customer, String date) {
 
@@ -170,14 +178,19 @@ public class Dates {
                 if (entry.getKey().uuid != customer.uuid) {
                     System.out.println("Kunde " + customer.getName() + " nicht in der Terminliste");
                 } else {
-                    entry.getValue().remove(date);
-                    // Diese Ausgabe kommt immer. Egal ob er einen Termin gelöscht hat oder nicht
-                    // Deshalb meine Plan, diese Ausgabe nur zu machen, wenn der übergebene Termin auch vorhanden ist 
-                    System.out.println("Termin am " + date + " für Kunde " + customer.getName() + " gelöscht");
+                    for (int i = 0; i < entry.getValue().size(); i++) {
+                        if (entry.getValue().get(i) == date) {
+                            entry.getValue().remove(date);
+                            System.out.println("Termin am " + date + " für Kunde " + customer.getName() + " gelöscht");
+                        } else if (!entry.getValue().contains(date)){
+                            System.out.println("Termin nicht vorhanden");
+                        }
+                    }
                 }
             }
         }
     }
+
 
     public void deleteCustomerDateNew(Customer customer) {
         Scanner scanner = new Scanner(System.in);

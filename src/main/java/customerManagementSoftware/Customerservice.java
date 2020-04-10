@@ -12,30 +12,50 @@ public class Customerservice {
         customerList.add(customer);
     }
 
-    public void updateCustomer(Customer customer) {
+    public void updateCustomer(Customer customer, String oldValue, String newValue) {
 
-        for (int i = 0; i < customerList.size(); i++) {
-           //sich den Kunden holen, bei dem sich was geändert hat
-            Customer customer1 = customerList.get(i);
-            if (customer1.getId() == customer.getId()) {
-                if (customer1.getName() != customer.getName()) {
-                    customer1.setName(customer.getName());
-                    if (customer1.getPostalcode() != customer.getPostalcode()) {
-                        customer1.setPostalcode(customer.getPostalcode());
-                    }
-                    if (customer1.getFirstname() != customer.getFirstname()) {
-                        customer1.setFirstname(customer.getFirstname());
-                    }
-                    if (customer1.getStreet() != customer.getStreet()) {
-                        customer1.setStreet(customer.getStreet());
-                    }
-                    if (customer1.getHousenumber() != customer.getHousenumber()) {
-                        customer1.setHousenumber(customer.getHousenumber());
-                    }
+        if (oldValue.equals(customer.getName())) {
+            updateCustomerName(customer, newValue);
+        }   else if (oldValue.equals(customer.getFirstname()))
+            updateCustomerFirstName(customer, newValue);
+            else if (oldValue.equals(customer.getStreet()))
+            updateCustomerStreet(customer, newValue);
+            else if (oldValue.equals(customer.getHousenumber()))
+            updateCustomerHouseNumber(customer, newValue);
+            else if (oldValue.equals(customer.getPostalcode()))
+            updateCustomerPostalCode(customer, newValue);
+            else {System.out.println("Wert nicht gefunden");}
+        }
+
+    public void updateCustomerName(Customer customer, String updateWord) {
+                if (!updateWord.equals(customer.getName())) {
+                    customer.setName(updateWord);
+                    System.out.print(customer.getName());
                 }
             }
-        }
+
+    public void updateCustomerFirstName(Customer customer, String updateFirstName) {
+                customer.setFirstname(updateFirstName);
+                System.out.print(customer.getFirstname());
     }
+
+    public void updateCustomerStreet(Customer customer, String updateStreet) {
+                customer.setStreet(updateStreet);
+                System.out.print(customer.getStreet());
+    }
+
+    public void updateCustomerHouseNumber(Customer customer, String updateHouseNumber) {
+                customer.setHousenumber(updateHouseNumber);
+                System.out.print(customer.getHousenumber());
+    }
+
+    public void updateCustomerPostalCode(Customer customer, String updatePostalCode) {
+                customer.setPostalcode(updatePostalCode);
+                System.out.print(customer.getPostalcode());
+    }
+
+
+
 
         public void printCustomerData(Customer customer) {
             System.out.println("Kunde mit der ID: " + customer.getId());
@@ -47,21 +67,13 @@ public class Customerservice {
         }
 
         public boolean searchCustomer(String searchterm) {
-        for (int i = 0; i < customerList.size(); i++) {
-            Customer customer1 = customerList.get(i);
-            if (customer1.getName() == searchterm) {
-                printCustomerData(customer1);
-            } else if (customer1.getFirstname() == searchterm) {
-                printCustomerData(customer1);
-            } else if (customer1.getStreet() == searchterm) {
-                printCustomerData(customer1);
-            } else if (customer1.getPostalcode() == searchterm) {
-                printCustomerData(customer1);
-            } else if (customer1.getHousenumber() == searchterm) {
-               // printCustomerData(customer1);
+            for (Customer customer : customerList) {
+                if (searchterm.equals(customer.getName())  || searchterm.equals(customer.getFirstname())
+                    || searchterm.equals(customer.getStreet()) || searchterm.equals(customer.getHousenumber())
+                    || searchterm.equals(customer.getPostalcode())) {
+                    printCustomerData(customer);
+                }
             }
-
-        }
         return true;
     }
 

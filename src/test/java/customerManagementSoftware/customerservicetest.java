@@ -41,7 +41,7 @@ public class customerservicetest {
     public void testeSearchCustomer() {
         customerservice.createCustomer(customer4);
         customerservice.createCustomer(customer2);
-        customerservice.searchCustomer("27");
+        customerservice.searchCustomer("Gantzert");
     }
 
     @Test
@@ -53,26 +53,14 @@ public class customerservicetest {
 
     @Test
     public void testeUpdateCustomer() {
+       customerservice.createCustomer(customer1);
+       customerservice.updateCustomer(customer1, "Auf der Schmelz", "An der Fuchsenhütte");
+    }
+
+    @Test
+    public void testUpdateCustomerName() {
         customerservice.createCustomer(customer1);
-
-        System.out.println(customerservice.customerList.get(0).getId());
-        System.out.println(customerservice.customerList.get(0).getName());
-        System.out.println(customerservice.customerList.get(0).getPostalcode());
-        System.out.println(customerservice.customerList.get(0).getHousenumber());
-        System.out.println(customerservice.customerList.get(0).getStreet());
-
-        customer1.setName("Schwarck");
-        customer1.setFirstname("Sebastian");
-        customer1.setPostalcode("64380");
-        customer1.setHousenumber("30");
-        customer1.setStreet("Auf der Schmelz");
-
-        customerservice.updateCustomer(customer2);
-        System.out.println(customerservice.customerList.get(0).getId());
-        System.out.println(customerservice.customerList.get(0).getName());
-        System.out.println(customerservice.customerList.get(0).getPostalcode());
-        System.out.println(customerservice.customerList.get(0).getHousenumber());
-        System.out.println(customerservice.customerList.get(0).getStreet());
+        customerservice.updateCustomerName(customer1, "Gantzert");
     }
 
     @Test

@@ -40,6 +40,7 @@ public class testDates {
         listOfDates1.addCustomerDate(customer, "20. Juni");
         listOfDates1.addCustomerDate(customer, "30. April");
         listOfDates1.addCustomerDate(customer, "10. April");
+        listOfDates1.deleteCustomerDate(customer, "10. April");
         listOfDates1.deleteCustomerDate(customer, "30. April");
         listOfDates1.printCustomerDates(customer);
     }
