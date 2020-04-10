@@ -29,13 +29,17 @@ public class testDates {
 
     }
 
+    //@Test
+   // public void testeDatum() {
+     //   listOfDates1.inputDate("30", "10", "2020", "20", "00");
+    //}
+
     @Test
 
     public void testDeleteDate() {
         listOfDates1.addCustomerDate(customer, "20. Juni");
         listOfDates1.addCustomerDate(customer, "30. April");
         listOfDates1.addCustomerDate(customer, "10. April");
-        listOfDates1.deleteCustomerDate(customer2, "20.Juni");
         listOfDates1.deleteCustomerDate(customer, "30. April");
         listOfDates1.printCustomerDates(customer);
     }
