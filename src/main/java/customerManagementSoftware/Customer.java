@@ -29,17 +29,15 @@ public class Customer {
     }
 
     public static Customer createFromScanner(final Scanner scanner) {
-
-
       try {
 
            System.out.println("Bitte Kundendaten eingeben: ");
 
-            String name = name();
-            String firstName = firstName();
-            String street = street();
-            String houseNumber = houseNumber();
-            String postalCode = postalCode();
+            String name = customerValues(scanner, true, "Nachname: ", "Bitte nur Buchstaben eingeben: ", "[A-Z, a-z]+");
+            String firstName = customerValues(scanner, true, "Vorname: ", "Bitte nur Buchstaben eingeben: ", "[A-Z, a-z]+" );
+            String street = customerValues(scanner, true, "Straße: ", "Bitte nur Buchstaben eingeben: ", "[A-Z, a-z]+" );
+            String houseNumber = customerValues(scanner, true, "Hausnummer: ", "Bitte eine Zahl zwischen 1 und 3 Ziffern eingeben", "[0-9]{1,3}");
+            String postalCode = customerValues(scanner, true, "Postleitzahl: ", "Bitte eine 5-stellige Zahl eingeben", "[0-9]{5}");
 
             return new Customer(name, firstName, street, houseNumber, postalCode);
       }
@@ -53,44 +51,23 @@ public class Customer {
 
     }
 
-    public static String name() {
-        //name
-        Scanner scanner = new Scanner(System.in);
-        String name;
-        boolean nameIsTrue = true;
-
+    public static String customerValues(Scanner scanner, boolean isTrue, String expression1 , String expression2, String regex) {
+        //valueExpression
+        String valueExpression;
         do {
-            if (nameIsTrue) {
-                System.out.println("Nachname ");
-                name = scanner.next();
-                nameIsTrue = false;
+            if (isTrue) {
+                System.out.println(expression1);
+                valueExpression = scanner.next();
+                isTrue = false;
             } else {
-                System.out.println("Bitte nur Buchstaben eingeben: ");
-                name = scanner.next();
+                System.out.println(expression2);
+                valueExpression = scanner.next();
             }
         }
-        while (! name.matches("[A-Z, a-z]+"));
-        return name;
+        while (! valueExpression.matches(regex));
+        return valueExpression;
     }
 
-    public static String firstName() {
-        Scanner scanner = new Scanner(System.in);
-        String firstname;
-        boolean firstNameIsTrue = true;
-        do {
-
-            if (firstNameIsTrue) {
-                System.out.println("Vorname ");
-                firstname = scanner.next();
-                firstNameIsTrue = false;
-            } else {
-                System.out.println("Bitte nur Buchstaben eingeben: ");
-                firstname = scanner.next();
-            }
-        }
-        while (! firstname.matches("[A-Z, a-z]+"));
-        return firstname;
-    }
 
     public static String street() {
         String street;

@@ -52,16 +52,7 @@ public class Dates {
             dates.add(date);
             customerDates.put(customer, dates);
         } else {
-            for (Map.Entry<Customer, List<String>> entry : customerDates.entrySet()) {
-                if (entry.getKey().uuid.equals(customer.uuid)) {
-                    System.out.println("Termin für Kunde " + customer.getName() + " anlegen:");
-                    entry.getValue().add(date);
-                    existingKunde = Optional.ofNullable(entry.getKey());
-
-
-                } else {
-                    existingKunde = Optional.empty();
-                }
+           doesCustomerExist(customer, existingKunde, date);
             }
 
             if(existingKunde.isEmpty()) {
@@ -71,100 +62,46 @@ public class Dates {
                 customerDates.put(customer, dates);
             }
         }
+
+    public void doesCustomerExist(Customer customer, Optional<Customer> existingKunde, String date) {
+        for (Map.Entry<Customer, List<String>> entry : customerDates.entrySet()) {
+            if (entry.getKey().uuid.equals(customer.uuid)) {
+                System.out.println("Termin für Kunde " + customer.getName() + " anlegen:");
+                entry.getValue().add(date);
+                existingKunde = Optional.ofNullable(entry.getKey());
+            } else {
+                existingKunde = Optional.empty();
+            }
+        }
     }
 
 
     public String inputDate (final Scanner scanner) {
         boolean isTrue = true;
-        String day = day(scanner, isTrue);
-        String month = month(scanner, isTrue);
-        String year = year(scanner, isTrue);
-        String hours = hours(scanner, isTrue);
-        String minutes = minutes(scanner, isTrue);
+        String day = dateValues(scanner, isTrue, "Tag eingeben: ", "Bitte 2 Ziffern zwischen 01 und 31 eingeben: ", "^(?:0*[1-9]|[12][0-9]|3[01])$" );
+        String month = dateValues(scanner, isTrue, "Monat eingeben ", "Bitte 2 Ziffern zwischen 01 und 12 eingeben: ", "0*([1-9]|1[0-2])");
+        String year = dateValues(scanner, isTrue, "Jahr eingeben ", "Bitte eine Jahreszahl zwischen 2020 und 2099 angeben: ", "0*(20[2-8][0-9]|209[0-9])" );
+        String hours = dateValues(scanner, isTrue, "Stunden eingeben ", "Bitte eine Zahl zwischen 0 und 23 eingeben: ", "0*([0-9]|1[0-9]|2[0-3])");
+        String minutes = dateValues(scanner, isTrue, "Minuten eingeben ", "Bitte Zahl zwischen 00 und 60 eingeben ", "0*([0-9]|[1-5][0-9]|60)" );
 
             String gesamtDatum = day + "." + month + "." + year + " " + hours + ":" + minutes + " Uhr";
             return gesamtDatum;
     }
 
-    public static String day(Scanner scanner, boolean isTrue) {
-        String day;
+    public static String dateValues(Scanner scanner, boolean isTrue, String expression1, String expression2, String regex) {
+        String dateExpression;
         do {
             if (isTrue) {
-                System.out.println("Tag eingeben ");
-                day = scanner.next();
+                System.out.println(expression1);
+                dateExpression = scanner.next();
                 isTrue = false;
             } else {
-                System.out.println("Bitte 2 Ziffern zwischen 01 und 31 eingeben: ");
-                day = scanner.next();
+                System.out.println(expression2);
+                dateExpression = scanner.next();
             }
         }
-        while (!day.matches("^(?:0*[1-9]|[12][0-9]|3[01])$"));
-        return day;
-    }
-
-    public static String month(Scanner scanner, boolean isTrue) {
-        String month;
-        do {
-            if (isTrue) {
-                System.out.println("Monat eingeben ");
-                month = scanner.next();
-                isTrue = false;
-            } else {
-                System.out.println("Bitte 2 Ziffern zwischen 01 und 12 eingeben: ");
-                month = scanner.next();
-            }
-        }
-        while (!month.matches("0*([1-9]|1[0-2])"));
-        return month;
-    }
-
-    public static String year(Scanner scanner, boolean isTrue) {
-        String year;
-        do {
-            if (isTrue) {
-                System.out.println("Jahr eingeben ");
-                year = scanner.next();
-                isTrue = false;
-            } else {
-                System.out.println("Bitte eine Jahreszahl zwischen 2020 und 2099 angeben: ");
-                year = scanner.next();
-            }
-        }
-        while (!year.matches("0*(20[2-8][0-9]|209[0-9])"));
-        return year;
-    }
-
-    public static String hours(Scanner scanner, boolean isTrue) {
-        String hours;
-        do {
-            if (isTrue) {
-                System.out.println("Stunden eingeben ");
-                hours = scanner.next();
-                isTrue = false;
-            } else {
-                System.out.println("Bitte eine Jahreszahl zwischen 2020 und 2099 angeben: ");
-                hours = scanner.next();
-            }
-        }
-        while (!hours.matches("0*([0-9]|1[0-9]|2[0-3])"));
-        return hours;
-    }
-
-    public static String minutes(Scanner scanner, boolean isTrue) {
-        String minutes;
-        do {
-
-            if (isTrue) {
-                System.out.println("Minuten eingeben ");
-                minutes = scanner.next();
-                isTrue = false;
-            } else {
-                System.out.println("Bitte eine Jahreszahl zwischen 2020 und 2099 angeben: ");
-                minutes = scanner.next();
-            }
-        }
-        while (! minutes.matches("0*([0-9]|[1-4][0-9]|5[0-9])"));
-        return minutes;
+        while (!dateExpression.matches(regex));
+        return dateExpression;
     }
 
 
@@ -198,17 +135,21 @@ public class Dates {
             System.out.println("Terminliste ist leer");
         }
         else {
-            for (Map.Entry<Customer, List<String>> entry : customerDates.entrySet()) {
-                if (entry.getKey().uuid != customer.uuid) {
-                    System.out.println("Kunde " + customer.getName() + " nicht in der Terminliste");
-                } else {
-                    String date = inputDate(scanner);
-                    entry.getValue().remove(date);
-                    System.out.println("Termin am " + date + " für Kunde " + customer.getName() + " gelöscht");
-                }
-            }
+            customerInDateList(scanner, customer);
         }
 
+    }
+
+    public void customerInDateList(Scanner scanner, Customer customer) {
+        for (Map.Entry<Customer, List<String>> entry : customerDates.entrySet()) {
+            if (entry.getKey().uuid != customer.uuid) {
+                System.out.println("Kunde " + customer.getName() + " nicht in der Terminliste");
+            } else {
+                String date = inputDate(scanner);
+                entry.getValue().remove(date);
+                System.out.println("Termin am " + date + " für Kunde " + customer.getName() + " gelöscht");
+            }
+        }
     }
 
 
