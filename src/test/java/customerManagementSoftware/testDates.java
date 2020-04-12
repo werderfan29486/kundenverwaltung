@@ -29,11 +29,6 @@ public class testDates {
 
     }
 
-    //@Test
-   // public void testeDatum() {
-     //   listOfDates1.inputDate("30", "10", "2020", "20", "00");
-    //}
-
     @Test
 
     public void testDeleteDate() {
