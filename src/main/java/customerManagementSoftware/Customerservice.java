@@ -76,7 +76,7 @@ public class Customerservice {
 
     public void deleteCustomer(Customer customer) {
                 for (int i = 0; i < customerList.size(); i++) {
-                    if (customerList.get(i).getId() == customer.getId()) {
+                    if (customerList.get(i).getId().equals(customer.getId())) {
                     customerList.remove(i);
                     }
                 }

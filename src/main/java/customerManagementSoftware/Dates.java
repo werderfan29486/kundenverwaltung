@@ -4,7 +4,7 @@ import java.util.*;
 
 public class Dates {
 
-    Map<Customer, List<String>> customerDates = new HashMap<Customer, List<String>>();  //--> bleibt
+    Map<Customer, List<String>> customerDates = new HashMap<>();
 
 
     //ADD CUSTOMER DATE
@@ -18,7 +18,7 @@ public class Dates {
             customerExists = doesCustomerExist(customer, date);
           }
 
-        if(customerExists == false) {
+        if(!customerExists) {
             addDateToList(customer, date);
         }
     }
@@ -57,11 +57,11 @@ public class Dates {
 
     public void findDate(Customer customer, String date ) {
         for (Map.Entry<Customer, List<String>> entry : customerDates.entrySet()) {
-            if (entry.getKey().uuid != customer.uuid) {
+            if (entry.getKey().uuid.equals(customer.uuid)) {
                 System.out.println("Kunde " + customer.getName() + " nicht in der Terminliste");
             } else {
                 for (int i = 0; i < entry.getValue().size(); i++) {
-                    if (entry.getValue().get(i) == date) {
+                    if (entry.getValue().get(i).equals(date)) {
                         entry.getValue().remove(date);
                         System.out.println("Termin am " + date + " für Kunde " + customer.getName() + " gelöscht");
                     } else if (!entry.getValue().contains(date)){
@@ -85,7 +85,7 @@ public class Dates {
 
     public void findDateForChange(Customer customer, String oldDate, String newDate) {
         for (Map.Entry<Customer, List<String>> entry : customerDates.entrySet()) {
-            if (entry.getKey().uuid != customer.uuid) {
+            if (entry.getKey().uuid.equals(customer.uuid)) {
                 System.out.println("Kunde " + customer.getName() + " nicht in der Terminliste");
             } else {
                 deleteCustomerDate(customer, oldDate);

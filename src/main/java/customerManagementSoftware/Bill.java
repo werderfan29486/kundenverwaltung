@@ -9,8 +9,7 @@ public class Bill {
 
     public Bill() {
         ++count;
-        String formatValue = String.format("%03d", count);
-        this.billNumber = formatValue;
+        this.billNumber = String.format("%03d", count);
     }
 
     public double calculateTotalSum(Customer customer, Dates listOfDates) {

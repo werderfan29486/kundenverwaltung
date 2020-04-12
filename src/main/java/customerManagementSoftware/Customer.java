@@ -17,10 +17,9 @@ public class Customer {
 
 
     public Customer(String name, String firstname, String street, String housenumber, String postalcode) {
-        this.id = uuid;
         ++count;
-        String formatValue = String.format("%04d", count);
-        this.customernumber = formatValue;
+        this.id = uuid;
+        this.customernumber = String.format("%04d", count);
         this.name = name;
         this.firstname = firstname;
         this.street = street;
