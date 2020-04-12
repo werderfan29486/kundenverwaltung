@@ -2,6 +2,8 @@ package customerManagementSoftware;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+
 
 public class testDates {
 
@@ -52,6 +54,14 @@ public class testDates {
     public void testPrintCustomerDates() {
         listOfDates1.addCustomerDate(customer, "20. Juni");
         listOfDates1.printCustomerDates(customer);
+    }
+
+    @Test
+    public void testPrintCustomerDatesSorted() {
+        listOfDates1.addCustomerDate(customer, "20 06 2020 10:00");
+        listOfDates1.addCustomerDate(customer, "19 06 2020 11:00");
+        listOfDates1.addCustomerDate(customer, "19 06 2020 09:00");
+        listOfDates1.printCustomerDatesSorted(customer);
     }
 
     @Test
