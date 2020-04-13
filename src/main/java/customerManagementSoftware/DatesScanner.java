@@ -1,5 +1,8 @@
 package customerManagementSoftware;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class DatesScanner {
@@ -69,6 +72,30 @@ public class DatesScanner {
         System.out.println("Kunde: " + customer.getFirstname() + " " + customer.getName() + " hat insgesamt");
         System.out.println(customerDates.get(customer).size() + " Termine");
         System.out.println("Terminliste: " + customerDates.get(customer));
+    }
+
+    public void printCustomerDatesSorted(Customer customer) {
+        List<String> dateList = customerDates.get(customer);
+
+        System.out.println("Unsortiert: ");
+        for (String datelistStr : dateList)
+            System.out.println(datelistStr);
+        dateList.sort(new Comparator<>() {
+            DateFormat f = new SimpleDateFormat("dd.MM.yyyy hh:mm");
+
+            @Override
+            public int compare(String o1, String o2) {
+                try {
+                    return f.parse(o1).compareTo(f.parse(o2));
+                } catch (ParseException e) {
+                    throw new IllegalArgumentException(e);
+                }
+            }
+        });
+
+        System.out.println("Sortiert: ");
+        for (String datelistStr : dateList)
+            System.out.println(datelistStr);
     }
 
     public int numberOfDates(Customer customer) {

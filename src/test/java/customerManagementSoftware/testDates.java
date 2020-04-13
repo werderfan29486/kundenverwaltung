@@ -2,8 +2,6 @@ package customerManagementSoftware;
 
 import org.junit.jupiter.api.Test;
 
-import java.util.List;
-
 
 public class testDates {
 
@@ -16,15 +14,15 @@ public class testDates {
 
     @Test
     public void testAddCustomerDate() {
-        listOfDates1.addCustomerDate(customer, "20. Juni");
-        listOfDates1.addCustomerDate(customer, "30. August");
-        listOfDates1.addCustomerDate(customer, "10. August");
-        listOfDates1.addCustomerDate(customer2, "15. März");
-        listOfDates1.addCustomerDate(customer2, "30. März");
-        listOfDates1.addCustomerDate(customer2, "30. August");
-        listOfDates1.addCustomerDate(customer3, "15. März");
-        listOfDates1.addCustomerDate(customer3, "30. März");
-        listOfDates1.addCustomerDate(customer3, "30. August");
+        listOfDates1.addCustomerDate(customer, "20", "10", "2020", "10", "00");
+        listOfDates1.addCustomerDate(customer, "30", "09", "2025", "12", "00");
+        listOfDates1.addCustomerDate(customer, "10", "12", "2023", "20", "00");
+        listOfDates1.addCustomerDate(customer2, "15", "04", "2021", "18", "00");
+        listOfDates1.addCustomerDate(customer2, "10", "12", "2024", "20", "00");
+        listOfDates1.addCustomerDate(customer2, "30", "07", "2020", "09", "00");
+        listOfDates1.addCustomerDate(customer3, "14", "06", "2030", "17", "00");
+        listOfDates1.addCustomerDate(customer3, "16", "03", "2020", "16", "00");
+        listOfDates1.addCustomerDate(customer3, "30", "09", "2020", "12", "00");
         listOfDates1.printCustomerDates(customer);
         listOfDates1.printCustomerDates(customer2);
         listOfDates1.printCustomerDates(customer3);
@@ -34,42 +32,49 @@ public class testDates {
     @Test
 
     public void testDeleteDate() {
-        listOfDates1.addCustomerDate(customer, "20. Juni");
-        listOfDates1.addCustomerDate(customer, "30. April");
-        listOfDates1.addCustomerDate(customer, "10. April");
-        listOfDates1.deleteCustomerDate(customer, "10. April");
-        listOfDates1.deleteCustomerDate(customer, "30. April");
+        listOfDates1.addCustomerDate(customer, "20", "10", "2020", "10", "00");
+        listOfDates1.addCustomerDate(customer, "30", "09", "2025", "12", "00");
+        listOfDates1.addCustomerDate(customer, "10", "12", "2023", "20", "00");
+        listOfDates1.deleteCustomerDate(customer, "20.10.2020 10:00");
+        listOfDates1.deleteCustomerDate(customer, "30.09.2020 10.00");
         listOfDates1.printCustomerDates(customer);
     }
 
     @Test
     public void testChangeCustomerDate() {
-        listOfDates1.addCustomerDate(customer, "20. Juni");
-        listOfDates1.addCustomerDate(customer, "30. April");
-        listOfDates1.changeCustomerDate(customer, "20. Juni", "21.Juni");
+        listOfDates1.addCustomerDate(customer, "20", "10", "2020", "10", "00");
+        listOfDates1.addCustomerDate(customer, "30", "09", "2025", "12", "00");
+        listOfDates1.addCustomerDate(customer, "10", "12", "2023", "20", "00");
+        listOfDates1.changeCustomerDate(customer, "20.10.2020 10:00", "21", "10", "2020", "10", "00");
         listOfDates1.printCustomerDates(customer);
     }
 
     @Test
     public void testPrintCustomerDates() {
-        listOfDates1.addCustomerDate(customer, "20. Juni");
+        listOfDates1.addCustomerDate(customer, "20", "10", "2020", "10", "00");
         listOfDates1.printCustomerDates(customer);
     }
 
     @Test
     public void testPrintCustomerDatesSorted() {
-        listOfDates1.addCustomerDate(customer, "20 06 2020 10:00");
-        listOfDates1.addCustomerDate(customer, "19 06 2020 11:00");
-        listOfDates1.addCustomerDate(customer, "19 06 2020 09:00");
+        listOfDates1.addCustomerDate(customer, "20", "10", "2020", "10", "00");
+        listOfDates1.addCustomerDate(customer, "30", "09", "2025", "12", "00");
+        listOfDates1.addCustomerDate(customer, "10", "12", "2023", "20", "00");
         listOfDates1.printCustomerDatesSorted(customer);
     }
 
     @Test
     public void testNumberOfDates() {
-        listOfDates1.addCustomerDate(customer, "20. Juni");
-        listOfDates1.addCustomerDate(customer, "23. August");
+        listOfDates1.addCustomerDate(customer, "20", "10", "2020", "10", "00");
         System.out.println(listOfDates1.numberOfDates(customer));
     }
+
+    @Test
+    public void testCheckString() {
+        String date = listOfDates1.createDateString("31", "12", "2020", "10", "00");
+        listOfDates1.checkDateString(date);
+    }
+
 
 
 }
