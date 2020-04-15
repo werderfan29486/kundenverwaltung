@@ -12,28 +12,35 @@ public class Bill {
         this.billNumber = String.format("%03d", count);
     }
 
-    public double calculateTotalSum(Customer customer, Dates listOfDates) {
-        numberOfHours = listOfDates.numberOfDates(customer);
-        return numberOfHours * hourlyPrice;
+    public int getHourlyPrice() {
+        return hourlyPrice;
     }
 
-    public void generateBill(Customer customer, Dates listOfDates) {
-        System.out.println("Rechnungsnummer: " + billNumber);
-        System.out.println("Kundennummer:   " + customer.getCustomernumber() + "              Name: " + customer.getFirstname() + " " + customer.getName());
-        numberOfHours = listOfDates.numberOfDates(customer);
-        System.out.println("-----------------------------------------------------");
-        System.out.println("Anzahl der Stunden:                               " + numberOfHours);
-        System.out.println("Stundenpreis:                                    "+ hourlyPrice);
-        System.out.println("-----------------------------------------------------");
-        System.out.println("                                  Gesamtbetrag: " + calculateTotalSum(customer, listOfDates));
+    public int getNumberOfHours() {
+        return numberOfHours;
     }
 
-    public void billPayed(Customer customer, Dates customerDates, Account account) {
-       account.accountBalance += calculateTotalSum(customer, customerDates);
-        System.out.println("Kunde " + customer.getName() + " hat Rechnung bezahlt");
-        System.out.println("Betrag: " + calculateTotalSum(customer, customerDates) + " Rechnungsnummer: " + billNumber);
-        System.out.println("Neuer Kontostand " + account.getAccountBalance());
-        customerDates.customerDates.get(customer).clear();
+    public String getBillNumber() {
+        return billNumber;
     }
 
+    public static int getCount() {
+        return count;
+    }
+
+    public void setHourlyPrice(int hourlyPrice) {
+        this.hourlyPrice = hourlyPrice;
+    }
+
+    public void setNumberOfHours(int numberOfHours) {
+        this.numberOfHours = numberOfHours;
+    }
+
+    public void setBillNumber(String billNumber) {
+        this.billNumber = billNumber;
+    }
+
+    public static void setCount(int count) {
+        Bill.count = count;
+    }
 }

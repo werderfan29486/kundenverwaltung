@@ -11,38 +11,41 @@ public class rechnungtest {
     Bill bill1 = new Bill();
     Bill bill2 = new Bill();
     Bill bill3 = new Bill();
-    Dates listOfDates = new Dates();
+    BillPaymentService billPaymentService1 = new BillPaymentService();
+    BillPaymentService billPaymentService2 = new BillPaymentService();
+    DatesService listOfDatesService = new DatesService();
+    DatesService2 listOfDatesService2 = new DatesService2();
     Account account = new Account();
 
     @Test
     public void testeErrechneGesamtBetrag() {
-        listOfDates.addCustomerDate(customer, "20", "10", "2020", "10", "00");
-        listOfDates.addCustomerDate(customer, "30", "09", "2025", "12", "00");
-        listOfDates.addCustomerDate(customer, "10", "12", "2023", "20", "00");
-        listOfDates.deleteCustomerDate(customer, "20. Januar");
-        System.out.println(bill1.calculateTotalSum(customer, listOfDates));
+        listOfDatesService.addCustomerDate(customer, "20", "10", "2020", "10", "00");
+        listOfDatesService.addCustomerDate(customer, "30", "09", "2025", "12", "00");
+        listOfDatesService.addCustomerDate(customer, "10", "12", "2023", "20", "00");
+        listOfDatesService.deleteCustomerDate(customer, "20. Januar");
+        System.out.println(billPaymentService1.calculateTotalSum(customer, listOfDatesService, bill1));
+        System.out.println(billPaymentService1.calculateTotalSum(customer, listOfDatesService2, bill1));
     }
 
     @Test
     public void testeGeneriereRechnung() {
-        listOfDates.addCustomerDate(customer, "20", "10", "2020", "10", "00");
-        listOfDates.addCustomerDate(customer, "30", "09", "2025", "12", "00");
-        listOfDates.addCustomerDate(customer, "10", "12", "2023", "20", "00");
-        listOfDates.addCustomerDate(customer2, "15", "04", "2021", "18", "00");
-        bill1.generateBill(customer, listOfDates);
-        bill2.generateBill(customer2, listOfDates);
+        listOfDatesService.addCustomerDate(customer, "20", "10", "2020", "10", "00");
+        listOfDatesService.addCustomerDate(customer, "30", "09", "2025", "12", "00");
+        listOfDatesService.addCustomerDate(customer, "10", "12", "2023", "20", "00");
+        listOfDatesService.addCustomerDate(customer2, "15", "04", "2021", "18", "00");
+        billPaymentService1.generateBill(customer, listOfDatesService, bill1);
+        billPaymentService2.generateBill(customer2, listOfDatesService, bill2);
     }
 
     @Test   //warum wird die Rechnungsnummer nicht hochgezählt?
     public void testeRechnungBezahlt() {
-        listOfDates.addCustomerDate(customer, "20", "10", "2020", "10", "00");
-        listOfDates.addCustomerDate(customer, "30", "09", "2025", "12", "00");
-        listOfDates.addCustomerDate(customer2, "15", "04", "2021", "18", "00");
-        bill1.billPayed(customer, listOfDates, account);
-        listOfDates.addCustomerDate(customer, "20", "01", "2020", "10", "00");
-        bill2.billPayed(customer2, listOfDates, account);
-        bill3.billPayed(customer, listOfDates, account);
+        listOfDatesService.addCustomerDate(customer, "20", "10", "2020", "10", "00");
+        listOfDatesService.addCustomerDate(customer, "30", "09", "2025", "12", "00");
+        listOfDatesService.addCustomerDate(customer2, "15", "04", "2021", "18", "00");
+        billPaymentService1.billPayed(customer, listOfDatesService, account, bill1);
+        listOfDatesService.addCustomerDate(customer, "20", "01", "2020", "10", "00");
+        billPaymentService1.billPayed(customer2, listOfDatesService, account, bill2);
+        billPaymentService1.billPayed(customer, listOfDatesService, account, bill3);
     }
-
 
 }

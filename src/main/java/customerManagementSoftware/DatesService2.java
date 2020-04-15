@@ -5,30 +5,35 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
-public class Dates {
+public class DatesService2 implements IdatesService {
+
 
     Map<Customer, List<String>> customerDates = new HashMap<>();
 
+    public Map<Customer, List<String>> getCustomerDates() {
+        return customerDates;
+    }
 
     //ADD CUSTOMER DATE
 
+    @Override
     public void addCustomerDate(Customer customer, String day, String month, String year, String hours, String minutes) {
         String date = createDateString(day, month, year, hours, minutes);
         Boolean customerExists = false;
-    if (checkDateString(date)) {
-        if (customerDates.isEmpty()) {
-            addDateToList(customer, date);
-        } else {
-            customerExists = doesCustomerExist(customer, date);
-        }
+        if (checkDateString(date)) {
+            if (customerDates.isEmpty()) {
+                addDateToList(customer, date);
+            } else {
+                customerExists = doesCustomerExist(customer, date);
+            }
 
-        if (!customerExists) {
-            addDateToList(customer, date);
+            if (!customerExists) {
+                addDateToList(customer, date);
+            }
         }
-    }
-    else {
-        System.out.println("Datum falsch eingegeben");
-    }
+        else {
+            System.out.println("Datum falsch eingegeben");
+        }
     }
 
     public void addDateToList(Customer customer, String date) {
@@ -45,7 +50,7 @@ public class Dates {
                 customerExists = true;
             }
             else {
-            customerExists = false;
+                customerExists = false;
             }
         }
         return customerExists;
@@ -69,12 +74,14 @@ public class Dates {
 
 
     //DELETE CUSTOMER DATE
+    @Override
     public void deleteCustomerDate(Customer customer, String date) {
 
         if (customerDates.isEmpty()) {
             System.out.println("Terminliste ist leer");
         } else {
             findDate(customer, date);
+            System.out.println("Test");
         }
     }
 
@@ -97,6 +104,7 @@ public class Dates {
 
 
     // CHANGE CUSTOMER DATE
+    @Override
     public void changeCustomerDate(Customer customer, String oldDate, String day, String month, String year, String hours, String minutes) {
         if (customerDates.isEmpty()) {
             System.out.println("keine Termine zum Ändern vorhanden");
@@ -118,20 +126,16 @@ public class Dates {
         }
     }
 
-
+    @Override
     public void printCustomerDates(Customer customer) {
         System.out.println("Kunde: " + customer.getFirstname() + " " + customer.getName() + " hat insgesamt");
         System.out.println(customerDates.get(customer).size() + " Termine");
-        System.out.println("Terminliste: " + customerDates.get(customer));
-        List<String> test = customerDates.get(customer);
+        printCustomerDatesSorted(customer);
     }
 
     public void printCustomerDatesSorted(Customer customer) {
         List<String> dateList = customerDates.get(customer);
 
-        System.out.println("Unsortiert: ");
-        for (String datelistStr : dateList)
-            System.out.println(datelistStr);
         dateList.sort(new Comparator<>() {
             DateFormat f = new SimpleDateFormat("dd.MM.yyyy hh:mm");
 
@@ -145,12 +149,14 @@ public class Dates {
             }
         });
 
-        System.out.println("Sortiert: ");
         for (String datelistStr : dateList)
-            System.out.println(datelistStr);
+            System.out.println(datelistStr + " Uhr");
     }
 
     public int numberOfDates(Customer customer) {
+        System.out.println("Terminliste ist leer");
         return customerDates.get(customer).size();
+
     }
 }
+
