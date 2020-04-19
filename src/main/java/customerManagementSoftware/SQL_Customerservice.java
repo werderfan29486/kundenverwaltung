@@ -14,6 +14,15 @@ public class SQL_Customerservice implements I_SQL_Customerservice {
         Connection conn = database1.connectToDatabase();
         PreparedStatement preparedStmt = conn.prepareStatement(SQL_CREATE);
         preparedStmt.execute();
+        System.out.println(preparedStmt.getParameterMetaData());
+        conn.close();
+    }
+
+    @Override
+    public void deleteTable() throws SQLException {
+        Connection conn = database1.connectToDatabase();
+        PreparedStatement preparedStmt = conn.prepareStatement("DROP TABLE Kunden ");
+        preparedStmt.execute();
         conn.close();
     }
 
@@ -26,7 +35,6 @@ public class SQL_Customerservice implements I_SQL_Customerservice {
             + "POSTALCODE VARCHAR(45) NOT NULL,"
             + "PRIMARY KEY (UID))";
 
-    @Override
     public String insertStatement() {
         return " insert into Kunden (name, firstname, street, housenumber, postalcode)"
                 + " values (?, ?, ?, ?, ?)";
@@ -46,4 +54,14 @@ public class SQL_Customerservice implements I_SQL_Customerservice {
         database1.closeConnection(conn);
     }
 
+    @Override
+    public void deleteCustomer(Customer customer) throws SQLException {
+        Connection conn = database1.connectToDatabase();
+        String query = "delete from Kunden where name = ?";
+        PreparedStatement preparedStmt = conn.prepareStatement(query);
+        preparedStmt.setString(1, "Gantzert");
+        preparedStmt.execute();
+        System.out.println("Kunde " + customer.getName() + " gelöscht");
+        database1.closeConnection(conn);
+    }
 }

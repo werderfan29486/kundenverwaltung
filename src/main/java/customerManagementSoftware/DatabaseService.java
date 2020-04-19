@@ -11,7 +11,7 @@ public class DatabaseService implements IDatabaseService {
         try {   Class.forName("com.mysql.cj.jdbc.Driver");
             conn = DriverManager.getConnection("jdbc:mysql://localhost/Kunden?user=root&password=&useLegacyDatetimeCode=false&serverTimezone=UTC");
             stmt = conn.createStatement();
-            System.out.println("Got it!");
+            System.out.println("Verbindung hergestellt");
 
             // stmt.executeUpdate(CREATE_TABLE_SQL);
             // stmt.executeUpdate(INSERT_INTO_TABLE);
