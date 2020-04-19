@@ -28,6 +28,7 @@ public class SQL_Customerservice implements I_SQL_Customerservice {
 
     private static final String SQL_CREATE ="CREATE TABLE Kunden ("
             + "UID INT NOT NULL AUTO_INCREMENT,"
+            + "KUNDENNUMMER VARCHAR(45) NOT NULL,"
             + "NAME VARCHAR(45) NOT NULL,"
             + "FIRSTNAME VARCHAR(45) NOT NULL,"
             + "STREET VARCHAR(45) NOT NULL,"
@@ -36,8 +37,8 @@ public class SQL_Customerservice implements I_SQL_Customerservice {
             + "PRIMARY KEY (UID))";
 
     public String insertStatement() {
-        return " insert into Kunden (name, firstname, street, housenumber, postalcode)"
-                + " values (?, ?, ?, ?, ?)";
+        return " insert into Kunden (kundennummer, name, firstname, street, housenumber, postalcode)"
+                + " values (?, ?, ?, ?, ?, ?)";
     }
 
     @Override
@@ -45,11 +46,12 @@ public class SQL_Customerservice implements I_SQL_Customerservice {
         Connection conn = database1.connectToDatabase();
         String query = insertStatement();
         PreparedStatement preparedStmt = conn.prepareStatement(query);
-        preparedStmt.setString (1, customer.getName());
-        preparedStmt.setString (2, customer.getFirstname());
-        preparedStmt.setString (3, customer.getStreet());
-        preparedStmt.setString (4, customer.getHousenumber());
-        preparedStmt.setString (5, customer.getPostalcode());
+        preparedStmt.setString (1, customer.getCustomernumber());
+        preparedStmt.setString (2, customer.getName());
+        preparedStmt.setString (3, customer.getFirstname());
+        preparedStmt.setString (4, customer.getStreet());
+        preparedStmt.setString (5, customer.getHousenumber());
+        preparedStmt.setString (6, customer.getPostalcode());
         preparedStmt.execute();
         database1.closeConnection(conn);
     }

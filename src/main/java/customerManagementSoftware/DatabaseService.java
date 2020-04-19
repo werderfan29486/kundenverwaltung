@@ -13,9 +13,6 @@ public class DatabaseService implements IDatabaseService {
             stmt = conn.createStatement();
             System.out.println("Verbindung hergestellt");
 
-            // stmt.executeUpdate(CREATE_TABLE_SQL);
-            // stmt.executeUpdate(INSERT_INTO_TABLE);
-
         } catch (SQLException | ClassNotFoundException e) {
             throw new Error("Problem", e);
         } finally {
