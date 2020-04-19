@@ -1,8 +1,6 @@
 package customerManagementSoftware;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
 
 public class SQL_Customerservice implements I_SQL_Customerservice {
 
@@ -26,7 +24,7 @@ public class SQL_Customerservice implements I_SQL_Customerservice {
         conn.close();
     }
 
-    private static final String SQL_CREATE ="CREATE TABLE Kunden ("
+    private static final String SQL_CREATE = "CREATE TABLE Kunden ("
             + "UID INT NOT NULL AUTO_INCREMENT,"
             + "CUSTOMERNUMBER VARCHAR(45) NOT NULL,"
             + "NAME VARCHAR(45) NOT NULL,"
@@ -46,12 +44,12 @@ public class SQL_Customerservice implements I_SQL_Customerservice {
         Connection conn = database1.connectToDatabase();
         String query = insertStatement();
         PreparedStatement preparedStmt = conn.prepareStatement(query);
-        preparedStmt.setString (1, customer.getCustomernumber());
-        preparedStmt.setString (2, customer.getName());
-        preparedStmt.setString (3, customer.getFirstname());
-        preparedStmt.setString (4, customer.getStreet());
-        preparedStmt.setString (5, customer.getHousenumber());
-        preparedStmt.setString (6, customer.getPostalcode());
+        preparedStmt.setString(1, customer.getCustomernumber());
+        preparedStmt.setString(2, customer.getName());
+        preparedStmt.setString(3, customer.getFirstname());
+        preparedStmt.setString(4, customer.getStreet());
+        preparedStmt.setString(5, customer.getHousenumber());
+        preparedStmt.setString(6, customer.getPostalcode());
         preparedStmt.execute();
         database1.closeConnection(conn);
     }
@@ -65,5 +63,25 @@ public class SQL_Customerservice implements I_SQL_Customerservice {
         preparedStmt.execute();
         System.out.println("Kunde " + customer.getName() + " gelöscht");
         database1.closeConnection(conn);
+    }
+
+    @Override
+    public void printAllCustomers() throws SQLException {
+        Connection conn = database1.connectToDatabase();
+        Statement st = conn.createStatement();
+        ResultSet rs = st.executeQuery("select * from Kunden");
+
+        System.out.println("Kundennummer" + "\t" + "Name" +"\t"+ "Firstname"+"\t"+ "Street"+ "\t" + "Housenumber" + "\t" + "Postalcode");
+        while(rs.next())
+        {
+            String columnName1 = rs.getString("Customernumber");
+            String columnName2 = rs.getString("Name");
+            String columnName3= rs.getString("Firstname");
+            String columnName4= rs.getString("Street");
+            String columnName5 = rs.getString("Housenumber");
+            String columnName6 = rs.getString("Postalcode");
+
+            System.out.println(columnName1+"\t"+ columnName2+"\t"+ columnName3 +"\t" +columnName4+"\t"+ columnName5+"\t"+ columnName6);
+        }
     }
 }

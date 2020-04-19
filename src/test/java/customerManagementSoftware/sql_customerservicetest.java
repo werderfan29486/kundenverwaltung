@@ -24,4 +24,9 @@ public class sql_customerservicetest {
     public void deleteCustomer() throws SQLException {
         sql_customerservice.deleteCustomer(customer1);
     }
+
+    @Test
+    public void testPrintAllCustomers() throws SQLException {
+        sql_customerservice.printAllCustomers();
+    }
 }
