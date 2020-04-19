@@ -28,7 +28,7 @@ public class SQL_Customerservice implements I_SQL_Customerservice {
 
     private static final String SQL_CREATE ="CREATE TABLE Kunden ("
             + "UID INT NOT NULL AUTO_INCREMENT,"
-            + "KUNDENNUMMER VARCHAR(45) NOT NULL,"
+            + "CUSTOMERNUMBER VARCHAR(45) NOT NULL,"
             + "NAME VARCHAR(45) NOT NULL,"
             + "FIRSTNAME VARCHAR(45) NOT NULL,"
             + "STREET VARCHAR(45) NOT NULL,"
@@ -37,7 +37,7 @@ public class SQL_Customerservice implements I_SQL_Customerservice {
             + "PRIMARY KEY (UID))";
 
     public String insertStatement() {
-        return " insert into Kunden (kundennummer, name, firstname, street, housenumber, postalcode)"
+        return " insert into Kunden (customernumber, name, firstname, street, housenumber, postalcode)"
                 + " values (?, ?, ?, ?, ?, ?)";
     }
 
@@ -59,9 +59,9 @@ public class SQL_Customerservice implements I_SQL_Customerservice {
     @Override
     public void deleteCustomer(Customer customer) throws SQLException {
         Connection conn = database1.connectToDatabase();
-        String query = "delete from Kunden where name = ?";
+        String query = "delete from Kunden where customernumber = ?";
         PreparedStatement preparedStmt = conn.prepareStatement(query);
-        preparedStmt.setString(1, "Gantzert");
+        preparedStmt.setString(1, customer.getCustomernumber());
         preparedStmt.execute();
         System.out.println("Kunde " + customer.getName() + " gelöscht");
         database1.closeConnection(conn);
