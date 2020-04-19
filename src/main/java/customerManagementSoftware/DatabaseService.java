@@ -34,6 +34,7 @@ public class DatabaseService implements IDatabaseService {
     public void closeConnection(Connection conn) throws SQLException {
         if (conn != null) {
             conn.close();
+            System.out.print("Verbindung beendet");
         }
     }
 }
