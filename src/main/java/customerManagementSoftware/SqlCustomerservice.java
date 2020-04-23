@@ -2,7 +2,7 @@ package customerManagementSoftware;
 
 import java.sql.*;
 
-public class SQL_Customerservice implements I_SQL_Customerservice {
+public class SqlCustomerservice implements IsqlCustomerservice {
 
     DatabaseService database1 = new DatabaseService();
 

@@ -10,13 +10,14 @@ public class databaseservicetest {
     DatabaseService database1 = new DatabaseService();
 
     @Test
-    public void connectToDataBase() {
-        database1.connectToDatabase();
+    public void connectToDataBase() throws SQLException {
+        Connection conn = database1.connectToDatabase("KUNDEN");
+        database1.closeConnection(conn);
     }
 
     @Test
     public void closeConnection() throws SQLException {
-        Connection conn = database1.connectToDatabase();
+        Connection conn = database1.connectToDatabase("KUNDEN");
         database1.closeConnection(conn);
     }
 
