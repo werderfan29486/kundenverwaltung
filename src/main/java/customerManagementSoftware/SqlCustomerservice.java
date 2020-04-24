@@ -66,14 +66,19 @@ public class SqlCustomerservice implements IsqlCustomerservice {
         String query = insertStatement(tableName);
 
         try {
-            PreparedStatement preparedStmt = conn.prepareStatement(query);
-            preparedStmt.setString(1, customer.getCustomernumber());
-            preparedStmt.setString(2, customer.getName());
-            preparedStmt.setString(3, customer.getFirstname());
-            preparedStmt.setString(4, customer.getStreet());
-            preparedStmt.setString(5, customer.getHousenumber());
-            preparedStmt.setString(6, customer.getPostalcode());
-            preparedStmt.execute();
+            if (customerExists(databaseName, tableName, customer)) {
+                System.out.println("Kunde schon vorhanden");
+            }
+            else {
+                PreparedStatement preparedStmt = conn.prepareStatement(query);
+                preparedStmt.setString(1, customer.getCustomernumber());
+                preparedStmt.setString(2, customer.getName());
+                preparedStmt.setString(3, customer.getFirstname());
+                preparedStmt.setString(4, customer.getStreet());
+                preparedStmt.setString(5, customer.getHousenumber());
+                preparedStmt.setString(6, customer.getPostalcode());
+                preparedStmt.execute();
+            }
         }
         catch (SQLException e){
             System.out.println("Tabelle " + tableName + " nicht vorhanden");
@@ -143,7 +148,7 @@ public class SqlCustomerservice implements IsqlCustomerservice {
         String query =strQuery.replace("$tableName",tableName);
         ResultSet rs = st.executeQuery(query);
 
-        System.out.println("Kundennummer" + "\t" + "Name" +"\t"+ "Firstname"+"\t"+ "Street"+ "\t" + "Housenumber" + "\t" + "Postalcode");
+        System.out.println("Kundennummer" + "\t" + "Name" +"\t\t"+ "Firstname"+"\t"+ "Street"+ "\t\t\t\t" + "Housenumber" + "\t\t" + "Postalcode");
         while(rs.next())
         {
             String columnName1 = rs.getString("Customernumber");
@@ -153,7 +158,7 @@ public class SqlCustomerservice implements IsqlCustomerservice {
             String columnName5 = rs.getString("Housenumber");
             String columnName6 = rs.getString("Postalcode");
 
-            System.out.println(columnName1+"\t"+ columnName2+"\t"+ columnName3 +"\t" +columnName4+"\t"+ columnName5+"\t"+ columnName6);
+            System.out.println(columnName1+"\t\t\t"+ columnName2+"\t"+ columnName3 +"\t\t" +columnName4+"\t\t"+ columnName5+"\t\t\t\t"+ columnName6);
         }
     }
 
