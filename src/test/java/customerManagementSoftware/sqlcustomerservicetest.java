@@ -12,13 +12,13 @@ public class sqlcustomerservicetest {
 
     @Test
     public void createTableTest() throws SQLException {
-        sqlCustomerService.createTable("KUNDEN", "Kunden");
+        sqlCustomerService.createTable("KUNDEN", "Test");
     }
 
     @Test
     public void deleteTableTest() throws SQLException {
        // sqlCustomerService.createTable("KUNDEN");
-        sqlCustomerService.deleteTable("KUNDEN", "Test");
+        sqlCustomerService.deleteTable("KUNDEN", "hallo");
     }
 
     @Test
@@ -36,12 +36,28 @@ public class sqlcustomerservicetest {
 
     @Test
     public void updateCustomerNameTest() throws SQLException {
-        sqlCustomerService.updateCustomerName(customer1, "KUNDEN", "Kunden", "firstname", "Alex");
+        sqlCustomerService.updateCustomerName(customer2, "KUNDEN", "Kunden", "firstname", "Alex");
         sqlCustomerService.printAllCustomers("KUNDEN", "Kunden");
     }
 
     @Test
-    public void testPrintAllCustomers() throws SQLException {
+    public void printAllCustomersTest() throws SQLException {
         sqlCustomerService.printAllCustomers("KUNDEN", "Kunden");
+    }
+
+    @Test
+    public void printTablesInDatabaseTest() throws SQLException {
+        sqlCustomerService.printTablesInDatabase("KUNDEN");
+    }
+
+    @Test
+    public void tableExistsTest() throws SQLException {
+        boolean test = sqlCustomerService.tableExists("KUNDEN", "Kunden");
+        System.out.println(test);
+    }
+
+    @Test
+    public void customerExistsTest() throws SQLException {
+        sqlCustomerService.customerExists("KUNDEN", "Kunden", customer2);
     }
 }

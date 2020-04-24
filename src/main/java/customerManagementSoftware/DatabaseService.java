@@ -21,7 +21,6 @@ public class DatabaseService implements IDatabaseService {
         try {   Class.forName("com.mysql.cj.jdbc.Driver");
                 conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/" + dataBaseName + "?user=root&password=example&useLegacyDatetimeCode=false&serverTimezone=UTC");
                 stmt = conn.createStatement();
-            System.out.println("Verbindung hergestellt");
             ResultSet resultSet = conn.getMetaData().getCatalogs();
             boolean dataBaseExists = false;
 
@@ -29,7 +28,6 @@ public class DatabaseService implements IDatabaseService {
 
                 String databaseList = resultSet.getString(1);
                 if(databaseList.equals(dataBaseName)) {
-                    System.out.println("Datenbank bereits angelegt");
                     dataBaseExists = true;
                 }
 
@@ -38,9 +36,6 @@ public class DatabaseService implements IDatabaseService {
             if (!dataBaseExists) {
                 initDatabase(conn);
             }
-
-
-
 
         } catch (SQLException | ClassNotFoundException e) {
             throw new Error("Problem", e);
@@ -60,7 +55,6 @@ public class DatabaseService implements IDatabaseService {
     public void closeConnection(Connection conn) throws SQLException {
         if (conn != null) {
             conn.close();
-            System.out.print("Verbindung beendet");
         }
     }
 }

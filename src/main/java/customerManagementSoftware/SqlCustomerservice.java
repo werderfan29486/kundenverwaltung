@@ -42,15 +42,6 @@ public class SqlCustomerservice implements IsqlCustomerservice {
         }
     }
 
-    /*public boolean tableExists(String databaseName, String tableName) throws SQLException {
-        Connection conn = database1.connectToDatabase(databaseName);
-        Statement stmt =  conn.createStatement();
-        String strQuery = "SELECT * FROM $database";
-        String query = strQuery.replace("$database", databaseName);
-        ResultSet rs = stmt.executeQuery(query);
-
-        while (rs.next())*/
-
     private static final String SQL_CREATE = "CREATE TABLE $tableName ("
             + "UID INT NOT NULL AUTO_INCREMENT,"
             + "CUSTOMERNUMBER VARCHAR(45) NOT NULL,"
@@ -100,15 +91,19 @@ public class SqlCustomerservice implements IsqlCustomerservice {
         String query = strQuery.replace("$tableName", tablename);
 
         try {
-            PreparedStatement preparedStmt = conn.prepareStatement(query);
-            preparedStmt.setString(1, customer.getCustomernumber());
-            preparedStmt.execute();
-            System.out.println("Kunde " + customer.getName() + " gelöscht");
+           if (!customerExists(databaseName, tablename, customer)) {
+               throw new customerDoesNotExistException();
+           }
+                PreparedStatement preparedStmt = conn.prepareStatement(query);
+                preparedStmt.setString(1, customer.getCustomernumber());
+                preparedStmt.execute();
+                System.out.println("Kunde " + customer.getName() + " gelöscht");
         }
         catch (SQLException e) {
-            System.out.println("Kunde " + customer.getName() + " nicht vorhanden. Löschvorgang nicht möglich");
-        }
-        finally {
+            e.printStackTrace();
+        } catch (customerDoesNotExistException e) {
+            System.out.println(e.getMessage() + " Löschvorgang nicht möglich.");
+        } finally {
             database1.closeConnection(conn);
         }
     }
@@ -121,11 +116,23 @@ public class SqlCustomerservice implements IsqlCustomerservice {
                 + "WHERE customernumber = ?";
         String query = strQuery.replace("$tableName", tableName);
         query = query.replace("$columnToUpdate", whatToUpdate);
-        PreparedStatement preparedStmt = conn.prepareStatement(query);
-        preparedStmt.setString(1, newValue);
-        preparedStmt.setString(2, customer.getCustomernumber());
-        preparedStmt.execute();
-        database1.closeConnection(conn);
+
+        try {
+            if (!customerExists(databaseName, tableName, customer)) {
+                throw new customerDoesNotExistException();
+            }
+
+            PreparedStatement preparedStmt = conn.prepareStatement(query);
+            preparedStmt.setString(1, newValue);
+            preparedStmt.setString(2, customer.getCustomernumber());
+            preparedStmt.execute();
+        }
+        catch (customerDoesNotExistException e) {
+            System.out.println(e.getMessage() + " Updatevorgang nicht möglich.");
+        }
+        finally {
+            database1.closeConnection(conn);
+        }
     }
 
     @Override
@@ -149,4 +156,76 @@ public class SqlCustomerservice implements IsqlCustomerservice {
             System.out.println(columnName1+"\t"+ columnName2+"\t"+ columnName3 +"\t" +columnName4+"\t"+ columnName5+"\t"+ columnName6);
         }
     }
+
+    public void printTablesInDatabase(String databaseName) throws SQLException {
+        Connection conn = database1.connectToDatabase(databaseName);
+        Statement stmt = conn.createStatement();
+
+        ResultSet rs = null;
+        DatabaseMetaData meta = (DatabaseMetaData) conn.getMetaData();
+        rs = meta.getTables(null, null, null, new String[] {
+                "TABLE"
+        });
+        int count = 0;
+        System.out.println("All table names are in test database:");
+        while (rs.next()) {
+            String tblName = rs.getString("TABLE_NAME");
+            System.out.println(tblName);
+            count++;
+        }
+        System.out.println(count + " Rows in set ");
+        stmt.close();
+        conn.close();
+    }
+
+    public boolean tableExists(String databaseName, String tableName) throws SQLException {
+        Connection conn = database1.connectToDatabase(databaseName);
+
+        ResultSet rs = null;
+        DatabaseMetaData meta = (DatabaseMetaData) conn.getMetaData();
+        rs = meta.getTables(null, null, null, new String[] {
+                "TABLE"
+        });
+        boolean tableExists = false;
+
+        while (rs.next()) {
+
+            String tableList = rs.getString("TABLE_NAME");
+            if(tableList.equals(tableName)) {
+                System.out.println("Tabelle existiert");
+                tableExists = true;
+            }
+
+        }
+        rs.close();
+        if (!tableExists) {
+            System.out.println("Tabelle existiert nicht");
+            return false;
+        }
+        return true;
+    }
+
+    public boolean customerExists(String databaseName, String tableName, Customer customer) throws SQLException {
+        Connection conn = database1.connectToDatabase(databaseName);
+        Statement stmt = conn.createStatement();
+        String strQuery = "select * from $tableName";
+        String query = strQuery.replace("$tableName", tableName);
+        ResultSet rs = stmt.executeQuery(query);
+        boolean exists = false;
+
+        while (rs.next()) {
+            String customerList = rs.getString("Customernumber");
+            if (customerList.equals(customer.getCustomernumber())) {
+                exists = true;
+            }
+        }
+           rs.close();
+
+            if (!exists) {
+                return false;
+            }
+
+            return true;
+        }
+
 }
