@@ -1,32 +1,40 @@
 package customerManagementSoftware;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import java.sql.SQLException;
+import java.sql.*;
 
 public class sqlcustomerservicetest {
 
     SqlCustomerservice sqlCustomerService = new SqlCustomerservice();
     Customer customer1 = new Customer("Gantzert", "Sebastian", "Auf der Schmelz", "30", "64380");
     Customer customer2 = new Customer("Jüttner", "Thomas", "Lessingstraße", "9", "64283");
+    Customer customer12 = new Customer("Schwarck", "Martin", "Keineahnung", "11", "42380");
+    DatabaseService database1 = new DatabaseService();
 
     @Test
     public void createTableTest() throws SQLException {
-        sqlCustomerService.createTable("KUNDEN", "Test");
+        sqlCustomerService.createTable("KUNDEN", "Kunden");
+        boolean tableExists = sqlCustomerService.tableExists("KUNDEN", "Kunden");
+        Assertions.assertTrue(tableExists);
     }
 
     @Test
     public void deleteTableTest() throws SQLException {
-       // sqlCustomerService.createTable("KUNDEN");
-        sqlCustomerService.deleteTable("KUNDEN", "hallo");
+        sqlCustomerService.deleteTable("KUNDEN", "Kunden");
+        boolean tableExists = sqlCustomerService.tableExists("KUNDEN", "Kunden");
+        Assertions.assertFalse(tableExists);
     }
 
     @Test
-    public void insertCustomer() throws SQLException {
-        //sqlCustomerService.createTable("KUNDEN", "Kunden");
+    public void insertCustomerTest() throws SQLException {
+        sqlCustomerService.insertCustomer(customer1, "KUNDEN", "Kunden");
         sqlCustomerService.insertCustomer(customer2, "KUNDEN", "Kunden");
-        sqlCustomerService.printAllCustomers("KUNDEN", "Kunden");
+        boolean customerDates = sqlCustomerService.checkCustomerDates("KUNDEN", "Kunden", customer12);
+        Assertions.assertTrue(customerDates);
     }
+
 
     @Test
     public void deleteCustomerTest() throws SQLException {
@@ -36,7 +44,7 @@ public class sqlcustomerservicetest {
 
     @Test
     public void updateCustomerNameTest() throws SQLException {
-        sqlCustomerService.updateCustomerName(customer2, "KUNDEN", "Kunden", "firstname", "Alex");
+        sqlCustomerService.updateCustomer(customer2, "KUNDEN", "Kunden", "firstname", "Alex");
         sqlCustomerService.printAllCustomers("KUNDEN", "Kunden");
     }
 
@@ -52,12 +60,13 @@ public class sqlcustomerservicetest {
 
     @Test
     public void tableExistsTest() throws SQLException {
-        boolean test = sqlCustomerService.tableExists("KUNDEN", "Kunden");
-        System.out.println(test);
+        boolean tableExists = sqlCustomerService.tableExists("KUNDEN", "Kunden");
+        Assertions.assertTrue(tableExists);
     }
 
     @Test
     public void customerExistsTest() throws SQLException {
-        sqlCustomerService.customerExists("KUNDEN", "Kunden", customer2);
+        boolean customerExists = sqlCustomerService.customerExists("KUNDEN", "Kunden", customer1);
+        Assertions.assertTrue(customerExists);
     }
 }

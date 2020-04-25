@@ -57,13 +57,13 @@ public class Customerservice {
 
                 if (oldValue.equals(customer.getName())) {
                 updateCustomerName(customer, newValue);
-                }  else if (oldValue.equals(customer.getFirstname()))
+                }  else if (oldValue.equals(customer.getFirstName()))
                    updateCustomerFirstName(customer, newValue);
                    else if (oldValue.equals(customer.getStreet()))
                    updateCustomerStreet(customer, newValue);
-                   else if (oldValue.equals(customer.getHousenumber()))
+                   else if (oldValue.equals(customer.getHouseNumber()))
                    updateCustomerHouseNumber(customer, newValue);
-                   else if (oldValue.equals(customer.getPostalcode()))
+                   else if (oldValue.equals(customer.getPostalCode()))
                    updateCustomerPostalCode(customer, newValue);
                    else {System.out.println("Wert nicht gefunden");}
    }
@@ -76,8 +76,8 @@ public class Customerservice {
     }
 
     public void updateCustomerFirstName(Customer customer, String updateFirstName) {
-                customer.setFirstname(updateFirstName);
-                System.out.print(customer.getFirstname());
+                customer.setFirstName(updateFirstName);
+                System.out.print(customer.getFirstName());
     }
 
     public void updateCustomerStreet(Customer customer, String updateStreet) {
@@ -86,29 +86,29 @@ public class Customerservice {
     }
 
     public void updateCustomerHouseNumber(Customer customer, String updateHouseNumber) {
-                customer.setHousenumber(updateHouseNumber);
-                System.out.print(customer.getHousenumber());
+                customer.setHouseNumber(updateHouseNumber);
+                System.out.print(customer.getHouseNumber());
     }
 
     public void updateCustomerPostalCode(Customer customer, String updatePostalCode) {
-                customer.setPostalcode(updatePostalCode);
-                System.out.print(customer.getPostalcode());
+                customer.setPostalCode(updatePostalCode);
+                System.out.print(customer.getPostalCode());
     }
 
     public void printCustomerData(Customer customer) {
                 System.out.println("Kunde mit der ID: " + customer.getId());
                 System.out.println("Name: " + customer.getName());
-                System.out.println("Vorname " + customer.getFirstname());
+                System.out.println("Vorname " + customer.getFirstName());
                 System.out.println("Straße: " + customer.getStreet());
-                System.out.println("Hausnummer " + customer.getHousenumber());
-                System.out.println("Plz:  " + customer.getPostalcode());
+                System.out.println("Hausnummer " + customer.getHouseNumber());
+                System.out.println("Plz:  " + customer.getPostalCode());
     }
 
     public boolean searchCustomer(String searchterm) {
                 for (Customer customer : customerList) {
-                    if (searchterm.equals(customer.getName())  || searchterm.equals(customer.getFirstname())
-                        || searchterm.equals(customer.getStreet()) || searchterm.equals(customer.getHousenumber())
-                        || searchterm.equals(customer.getPostalcode())) {
+                    if (searchterm.equals(customer.getName())  || searchterm.equals(customer.getFirstName())
+                        || searchterm.equals(customer.getStreet()) || searchterm.equals(customer.getHouseNumber())
+                        || searchterm.equals(customer.getPostalCode())) {
                     printCustomerData(customer);
                 }
             }
@@ -126,12 +126,12 @@ public class Customerservice {
     public void printCustomerList() {
                 for (int i = 0; i < customerList.size(); i++) {
                     Customer customer1 = customerList.get(i);
-                    System.out.println("Kundennummer " + customer1.getCustomernumber());
+                    System.out.println("Kundennummer " + customer1.getCustomerNumber());
                     System.out.println("Name: " + customer1.getName());
-                    System.out.println("Vorname: " + customer1.getFirstname());
+                    System.out.println("Vorname: " + customer1.getFirstName());
                     System.out.println("Straße: " + customer1.getStreet());
-                    System.out.println("Hausnummer: " + customer1.getHousenumber());
-                    System.out.println("PLZ: " + customer1.getPostalcode());
+                    System.out.println("Hausnummer: " + customer1.getHouseNumber());
+                    System.out.println("PLZ: " + customer1.getPostalCode());
                     System.out.println();
 
                 }

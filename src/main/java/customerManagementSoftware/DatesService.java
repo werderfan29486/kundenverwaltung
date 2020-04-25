@@ -126,7 +126,7 @@ public class DatesService implements IdatesService {
 
     @Override
     public void printCustomerDates(Customer customer) {
-        System.out.println("Kunde: " + customer.getFirstname() + " " + customer.getName() + " hat insgesamt");
+        System.out.println("Kunde: " + customer.getFirstName() + " " + customer.getName() + " hat insgesamt");
         System.out.println(customerDates.get(customer).size() + " Termine");
         printCustomerDatesSorted(customer);
     }

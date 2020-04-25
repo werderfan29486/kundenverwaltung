@@ -1,38 +1,36 @@
 package customerManagementSoftware;
-import java.util.InputMismatchException;
-import java.util.Scanner;
 import java.util.UUID;
 
 public class Customer {
 
     final String uuid = UUID.randomUUID().toString().replace("-", "");
     private String id;
-    private String customernumber;
+    private String customerNumber;
     private String name;
-    private String firstname;
+    private String firstName;
     private String street;
-    private String housenumber;
-    private String postalcode;
+    private String houseNumber;
+    private String postalCode;
     private static int count = 0;
 
 
-    public Customer(String name, String firstname, String street, String housenumber, String postalcode) {
+    public Customer(String name, String firstName, String street, String houseNumber, String postalCode) {
         ++count;
         this.id = uuid;
-        this.customernumber = String.format("%04d", count);
+        this.customerNumber = String.format("%04d", count);
         this.name = name;
-        this.firstname = firstname;
+        this.firstName = firstName;
         this.street = street;
-        this.housenumber = housenumber;
-        this.postalcode = postalcode;
+        this.houseNumber = houseNumber;
+        this.postalCode = postalCode;
     }
 
     public void setName(String name) {
         this.name = name;
     }
 
-    public void setFirstname(String firstname) {
-        this.firstname = firstname;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
     public void setStreet(String street) {
@@ -40,38 +38,38 @@ public class Customer {
     }
 
 
-    public void setHousenumber(String housenumber) {
-        this.housenumber = housenumber;
+    public void setHouseNumber(String houseNumber) {
+        this.houseNumber = houseNumber;
     }
 
-    public void setPostalcode(String postalcode) {
-        this.postalcode = postalcode;
+    public void setPostalCode(String postalCode) {
+        this.postalCode = postalCode;
     }
 
     public String getId() {
         return id;
     }
 
-    public String getCustomernumber() {return customernumber;}
+    public String getCustomerNumber() {return customerNumber;}
 
     public String getName() {
         return name;
     }
 
-    public String getFirstname() {
-        return firstname;
+    public String getFirstName() {
+        return firstName;
     }
 
     public String getStreet() {
         return street;
     }
 
-    public String getHousenumber() {
-        return housenumber;
+    public String getHouseNumber() {
+        return houseNumber;
     }
 
-    public String getPostalcode() {
-        return postalcode;
+    public String getPostalCode() {
+        return postalCode;
     }
 
 }

@@ -9,7 +9,7 @@ public class BillPaymentService {
 
     public void generateBill(Customer customer, IdatesService listOfDatesService, Bill bill) {
         System.out.println("Rechnungsnummer: " + bill.getBillNumber());
-        System.out.println("Kundennummer:   " + customer.getCustomernumber() + "              Name: " + customer.getFirstname() + " " + customer.getName());
+        System.out.println("Kundennummer:   " + customer.getCustomerNumber() + "              Name: " + customer.getFirstName() + " " + customer.getName());
         int numberOfHours = listOfDatesService.numberOfDates(customer);
         System.out.println("-----------------------------------------------------");
         System.out.println("Anzahl der Stunden:                               " + numberOfHours);
