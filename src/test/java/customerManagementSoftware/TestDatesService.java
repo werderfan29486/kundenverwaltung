@@ -3,7 +3,7 @@ package customerManagementSoftware;
 import org.junit.jupiter.api.Test;
 
 
-public class testDatesService {
+public class TestDatesService {
 
     DatesService listOfDatesService1 = new DatesService();
 

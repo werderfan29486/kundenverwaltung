@@ -5,9 +5,9 @@ import org.junit.jupiter.api.Test;
 
 import java.sql.*;
 
-public class sqlcustomerservicetest {
+public class SqlCustomerServiceTest {
 
-    SqlCustomerservice sqlCustomerService = new SqlCustomerservice();
+    SqlCustomerService sqlCustomerService = new SqlCustomerService();
     Customer customer1 = new Customer("Gantzert", "Sebastian", "Auf der Schmelz", "30", "64380");
     Customer customer2 = new Customer("Jüttner", "Thomas", "Lessingstraße", "9", "64283");
     Customer customer12 = new Customer("Schwarck", "Martin", "Keineahnung", "11", "42380");

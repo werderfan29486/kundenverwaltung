@@ -2,7 +2,7 @@ package customerManagementSoftware;
 
 import java.sql.SQLException;
 
-public interface IsqlCustomerservice {
+public interface ISqlCustomerService {
 
     public void createTable(String databaseName, String tableName) throws SQLException;
     public void deleteTable(String databaseName, String tableName) throws SQLException;

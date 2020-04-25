@@ -2,7 +2,7 @@ package customerManagementSoftware;
 
 import java.util.*;
 
-public class Customerservice {
+public class CustomerService {
 
 
     List<Customer> customerList = new ArrayList<Customer>();

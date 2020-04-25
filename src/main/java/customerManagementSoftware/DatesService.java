@@ -5,7 +5,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
-public class DatesService implements IdatesService {
+public class DatesService implements IDatesService {
 
     Map<Customer, List<String>> customerDates = new HashMap<>();
 

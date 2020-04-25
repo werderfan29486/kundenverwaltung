@@ -2,7 +2,7 @@ package customerManagementSoftware;
 
 import org.junit.jupiter.api.Test;
 
-public class customerservicetest {
+public class CustomerServiceTest {
 
     Customer customer1 = new Customer("Gantzert", "Sebastian", "Auf der Schmelz", "30", "64380");
     Customer customer2 = new Customer("Schwarck", "Alex", "Fuchsenhütte", "27", "64380");
@@ -15,7 +15,7 @@ public class customerservicetest {
     Customer customer10 = new Customer("Schwarck", "Alex", "Fuchsenhütte", "27", "64380");
     Customer customer11 = new Customer("Jüttner", "Thomas", "Lessingstraße", "9", "64283");
     Customer customer12 = new Customer("Schwarck", "Martin", "Keineahnung", "11", "42380");
-    Customerservice customerservice = new Customerservice();
+    CustomerService customerservice = new CustomerService();
 
     @Test
     public void testCreateCustomer() {

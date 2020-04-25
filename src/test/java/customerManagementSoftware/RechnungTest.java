@@ -2,7 +2,7 @@ package customerManagementSoftware;
 
 import org.junit.jupiter.api.Test;
 
-public class rechnungtest {
+public class RechnungTest {
 
     Customer customer = new Customer("Schwarck", "Alex", "An der Fuchsenhütte", "27", "64380");
     Customer customer2 = new Customer("Gantzert", "Sega", "Auf der Schmelz", "27", "64380");

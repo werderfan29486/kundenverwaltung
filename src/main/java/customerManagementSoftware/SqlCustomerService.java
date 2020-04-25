@@ -2,7 +2,7 @@ package customerManagementSoftware;
 
 import java.sql.*;
 
-public class SqlCustomerservice implements IsqlCustomerservice {
+public class SqlCustomerService implements ISqlCustomerService {
 
     DatabaseService database1 = new DatabaseService();
 
@@ -74,13 +74,13 @@ public class SqlCustomerservice implements IsqlCustomerservice {
 
         try {
            if (!customerExists(databaseName, tablename, customer)) {
-               throw new customerDoesNotExistException();
+               throw new CustomerDoesNotExistException();
            }
                deleteQuery(conn, customer, tablename);
         }
         catch (SQLException e) {
             e.printStackTrace();
-        } catch (customerDoesNotExistException e) {
+        } catch (CustomerDoesNotExistException e) {
             System.out.println(e.getMessage() + " Löschvorgang nicht möglich.");
         } finally {
             database1.closeConnection(conn);
@@ -93,11 +93,11 @@ public class SqlCustomerservice implements IsqlCustomerservice {
 
         try {
             if (!customerExists(databaseName, tableName, customer)) {
-                throw new customerDoesNotExistException();
+                throw new CustomerDoesNotExistException();
             }
             updateQuery(conn, tableName, customer, whatToUpdate, newValue);
         }
-        catch (customerDoesNotExistException e) {
+        catch (CustomerDoesNotExistException e) {
             System.out.println(e.getMessage() + " Updatevorgang nicht möglich.");
         }
         finally {
