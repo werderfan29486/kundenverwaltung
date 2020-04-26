@@ -139,13 +139,12 @@ public class SqlCustomerService implements ISqlCustomerService {
         preparedStmt.execute();
         preparedStmt.close();
     }
-    
+
     public String insertStatement(String tablename) {
 
         String strQuery = " insert into $tableName (customernumber, name, firstname, street, housenumber, postalcode)"
                 + " values (?, ?, ?, ?, ?, ?)";
-        String query = strQuery.replace("$tableName", tablename);
-        return query;
+        return strQuery.replace("$tableName", tablename);
     }
 
     //for deleteCustomer();
@@ -171,6 +170,25 @@ public class SqlCustomerService implements ISqlCustomerService {
         preparedStmt.setString(1, newValue);
         preparedStmt.setString(2, customer.getCustomerNumber());
         preparedStmt.execute();
+    }
+
+    public String checkUpdatedValue(String databaseName, String tableName, Customer customer, String whatToCheck) throws SQLException {
+        Connection conn = database1.connectToDatabase(databaseName);
+        String sql = "SELECT $column FROM $tableName WHERE customernumber = ?";
+        String query1 = sql.replace("$tableName", tableName);
+        String query = query1.replace("$column", whatToCheck);
+
+        PreparedStatement prepStmt = conn.prepareStatement(query);
+        prepStmt.setString(1, customer.getCustomerNumber());
+        ResultSet rs = prepStmt.executeQuery();
+        String value = null;
+
+        while (rs.next()) {
+            value = rs.getString(whatToCheck);
+        }
+        prepStmt.close();
+        conn.close();
+        return value;
     }
 
     //for printAllCustomers();

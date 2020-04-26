@@ -39,23 +39,15 @@ public class SqlCustomerServiceTest {
     @Test
     public void deleteCustomerTest() throws SQLException {
         sqlCustomerService.deleteCustomer(customer2, "KUNDEN", "Kunden");
-        sqlCustomerService.printAllCustomers("KUNDEN", "Kunden");
+        boolean customerExists = sqlCustomerService.customerExists("KUNDEN", "Kunden", customer1);
+        Assertions.assertFalse(customerExists);
     }
 
     @Test
     public void updateCustomerNameTest() throws SQLException {
-        sqlCustomerService.updateCustomer(customer2, "KUNDEN", "Kunden", "firstname", "Alex");
-        sqlCustomerService.printAllCustomers("KUNDEN", "Kunden");
-    }
-
-    @Test
-    public void printAllCustomersTest() throws SQLException {
-        sqlCustomerService.printAllCustomers("KUNDEN", "Kunden");
-    }
-
-    @Test
-    public void printTablesInDatabaseTest() throws SQLException {
-        sqlCustomerService.printTablesInDatabase("KUNDEN");
+        sqlCustomerService.updateCustomer(customer1, "KUNDEN", "Kunden", "firstname", "Alex");
+        String updatedValue = sqlCustomerService.checkUpdatedValue("KUNDEN", "Kunden", customer1, "firstname");
+        Assertions.assertEquals("Alex", updatedValue);
     }
 
     @Test
@@ -68,5 +60,21 @@ public class SqlCustomerServiceTest {
     public void customerExistsTest() throws SQLException {
         boolean customerExists = sqlCustomerService.customerExists("KUNDEN", "Kunden", customer1);
         Assertions.assertTrue(customerExists);
+    }
+
+    @Test
+    public void checkUpdatedValueTest() throws SQLException {
+        String test = sqlCustomerService.checkUpdatedValue("KUNDEN", "Kunden", customer1, "firstname");
+        Assertions.assertEquals("Sebastian", test);
+    }
+
+    @Test
+    public void printAllCustomersTest() throws SQLException {
+        sqlCustomerService.printAllCustomers("KUNDEN", "Kunden");
+    }
+
+    @Test
+    public void printTablesInDatabaseTest() throws SQLException {
+        sqlCustomerService.printTablesInDatabase("KUNDEN");
     }
 }
