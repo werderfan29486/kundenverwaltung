@@ -1,23 +1,31 @@
 package customerManagementSoftware;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.sql.*;
 
 public class SqlCustomerService implements ISqlCustomerService {
 
     DatabaseService database1 = new DatabaseService();
+    Connection conn = null;
+    Statement stmt = null;
+    PreparedStatement preparedStmt = null;
+    ResultSet rs = null;
+    Logger logger = LoggerFactory.getLogger("");
 
 // MAIN METHODS
     @Override
     public void createTable(String dataBaseName, String tableName) throws SQLException {
-        Connection conn = database1.connectToDatabase(dataBaseName);
+        conn = database1.connectToDatabase(dataBaseName);
         String query = SQL_CREATE.replace("$tableName", tableName);
         try {
-            PreparedStatement preparedStmt = conn.prepareStatement(query);
+            preparedStmt = conn.prepareStatement(query);
             preparedStmt.execute();
         }
 
         catch (SQLException e) {
-            System.out.println("Datenbank " + tableName + " existiert bereits");
+            logger.info("Datenbank " + tableName + " existiert bereits");
         }
         finally {
             conn.close();
@@ -26,12 +34,12 @@ public class SqlCustomerService implements ISqlCustomerService {
 
     @Override
     public void deleteTable(String databaseName, String tableName) throws SQLException {
-        Connection conn = database1.connectToDatabase(databaseName);
+        conn = database1.connectToDatabase(databaseName);
         String strQuery = "DROP TABLE $tableName";
         String query = strQuery.replace("$tableName", tableName);
 
         try {
-            PreparedStatement preparedStmt = conn.prepareStatement(query);
+            preparedStmt = conn.prepareStatement(query);
             preparedStmt.execute();
             System.out.println("Tabelle " + tableName + " gelöscht");
         }
@@ -47,7 +55,7 @@ public class SqlCustomerService implements ISqlCustomerService {
 
     @Override
     public void insertCustomer(Customer customer, String databaseName, String tableName) throws SQLException {
-        Connection conn = database1.connectToDatabase(databaseName);
+        conn = database1.connectToDatabase(databaseName);
 
         try {
             if (customerExists(databaseName, tableName, customer)) {
@@ -70,7 +78,7 @@ public class SqlCustomerService implements ISqlCustomerService {
 
     @Override
     public void deleteCustomer(Customer customer, String databaseName, String tablename) throws SQLException {
-        Connection conn = database1.connectToDatabase(databaseName);
+        conn = database1.connectToDatabase(databaseName);
 
         try {
            if (!customerExists(databaseName, tablename, customer)) {
@@ -89,7 +97,7 @@ public class SqlCustomerService implements ISqlCustomerService {
 
     @Override
     public void updateCustomer(Customer customer, String databaseName, String tableName, String whatToUpdate, String newValue) throws SQLException {
-        Connection conn = database1.connectToDatabase(databaseName);
+        conn = database1.connectToDatabase(databaseName);
 
         try {
             if (!customerExists(databaseName, tableName, customer)) {
@@ -107,8 +115,8 @@ public class SqlCustomerService implements ISqlCustomerService {
 
     @Override
     public void printAllCustomers(String databaseName, String tableName) throws SQLException {
-        Connection conn = database1.connectToDatabase(databaseName);
-        System.out.println("Kundennummer" + "\t" + "Name" +"\t\t"+ "Firstname"+"\t"+ "Street"+ "\t\t\t\t" + "Housenumber" + "\t\t" + "Postalcode");
+        conn = database1.connectToDatabase(databaseName);
+        logger.info("Kundennummer" + "\t" + "Name" +"\t\t"+ "Firstname"+"\t"+ "Street"+ "\t\t\t\t" + "Housenumber" + "\t\t" + "Postalcode");
         printColumns(conn, tableName);
         conn.close();
     }
@@ -151,7 +159,7 @@ public class SqlCustomerService implements ISqlCustomerService {
     public void deleteQuery(Connection conn, Customer customer, String tableName) throws SQLException {
         String strQuery = "delete from $tableName where customernumber = ?";
         String query = strQuery.replace("$tableName", tableName);
-        PreparedStatement preparedStmt = conn.prepareStatement(query);
+        preparedStmt = conn.prepareStatement(query);
         preparedStmt.setString(1, customer.getCustomerNumber());
         preparedStmt.execute();
         preparedStmt.close();
@@ -166,37 +174,37 @@ public class SqlCustomerService implements ISqlCustomerService {
         String query = strQuery.replace("$tableName", tableName);
         query = query.replace("$columnToUpdate", whatToUpdate);
 
-        PreparedStatement preparedStmt = conn.prepareStatement(query);
+        preparedStmt = conn.prepareStatement(query);
         preparedStmt.setString(1, newValue);
         preparedStmt.setString(2, customer.getCustomerNumber());
         preparedStmt.execute();
     }
 
     public String checkUpdatedValue(String databaseName, String tableName, Customer customer, String whatToCheck) throws SQLException {
-        Connection conn = database1.connectToDatabase(databaseName);
+        conn = database1.connectToDatabase(databaseName);
         String sql = "SELECT $column FROM $tableName WHERE customernumber = ?";
         String query1 = sql.replace("$tableName", tableName);
         String query = query1.replace("$column", whatToCheck);
 
-        PreparedStatement prepStmt = conn.prepareStatement(query);
-        prepStmt.setString(1, customer.getCustomerNumber());
-        ResultSet rs = prepStmt.executeQuery();
+        preparedStmt = conn.prepareStatement(query);
+        preparedStmt.setString(1, customer.getCustomerNumber());
+        rs = preparedStmt.executeQuery();
         String value = null;
 
         while (rs.next()) {
             value = rs.getString(whatToCheck);
         }
-        prepStmt.close();
+        preparedStmt.close();
         conn.close();
         return value;
     }
 
     //for printAllCustomers();
     public void printColumns(Connection conn, String tableName) throws SQLException {
-        Statement st = conn.createStatement();
+        stmt = conn.createStatement();
         String strQuery = "select * from $tableName";
         String query =strQuery.replace("$tableName",tableName);
-        ResultSet rs = st.executeQuery(query);
+        rs = stmt.executeQuery(query);
         while (rs.next()) {
             String columnName1 = rs.getString("Customernumber");
             String columnName2 = rs.getString("Name");
@@ -205,22 +213,21 @@ public class SqlCustomerService implements ISqlCustomerService {
             String columnName5 = rs.getString("Housenumber");
             String columnName6 = rs.getString("Postalcode");
 
-            System.out.println(columnName1 + "\t\t\t" + columnName2 + "\t" + columnName3 + "\t\t" + columnName4 + "\t\t" + columnName5 + "\t\t\t\t" + columnName6);
+            logger.info(columnName1 + "\t\t\t" + columnName2 + "\t" + columnName3 + "\t" + columnName4 + "" + columnName5 + "\t\t\t\t" + columnName6);
         }
-        st.close();
+        stmt.close();
         rs.close();
     }
 
 
 
     public void printTablesInDatabase(String databaseName) throws SQLException {
-        Connection conn = database1.connectToDatabase(databaseName);
+        conn = database1.connectToDatabase(databaseName);
         printTables(conn);
         conn.close();
     }
 
     public void printTables(Connection conn) throws SQLException {
-        ResultSet rs = null;
         DatabaseMetaData meta = (DatabaseMetaData) conn.getMetaData();
         rs = meta.getTables(null, null, null, new String[] {
                 "TABLE"
@@ -235,11 +242,11 @@ public class SqlCustomerService implements ISqlCustomerService {
 
     //for insert, delete, updateCustomer();
     public boolean customerExists(String databaseName, String tableName, Customer customer) throws SQLException {
-        Connection conn = database1.connectToDatabase(databaseName);
-        Statement stmt = conn.createStatement();
+        conn = database1.connectToDatabase(databaseName);
+        stmt = conn.createStatement();
         String strQuery = "select * from $tableName";
         String query = strQuery.replace("$tableName", tableName);
-        ResultSet rs = stmt.executeQuery(query);
+        rs = stmt.executeQuery(query);
         boolean exists = false;
         return searchCustomer(rs, exists, customer);
     }
@@ -262,9 +269,7 @@ public class SqlCustomerService implements ISqlCustomerService {
 
     //for createTableTest(), deleteTableTest();
     public boolean tableExists(String databaseName, String tableName) throws SQLException {
-        Connection conn = database1.connectToDatabase(databaseName);
-
-        ResultSet rs = null;
+        conn = database1.connectToDatabase(databaseName);
         DatabaseMetaData meta = (DatabaseMetaData) conn.getMetaData();
         rs = meta.getTables(null, null, null, new String[] {
                 "TABLE"
@@ -295,13 +300,13 @@ public class SqlCustomerService implements ISqlCustomerService {
 
     //for insertCustomerTest();
         public boolean checkCustomerDates(String databaseName, String tableName, Customer customer) throws SQLException {
-            Connection conn = database1.connectToDatabase(databaseName);
+            conn = database1.connectToDatabase(databaseName);
             String strQuery = "select * from $tableName WHERE customernumber = ?";
             String query = strQuery.replace("$tableName", tableName);
-            PreparedStatement stmt = conn.prepareStatement(query);
-            stmt.setString(1, customer.getCustomerNumber());
-            stmt.execute();
-            ResultSet rs = stmt.executeQuery();
+            preparedStmt = conn.prepareStatement(query);
+            preparedStmt.setString(1, customer.getCustomerNumber());
+            preparedStmt.execute();
+            rs = preparedStmt.executeQuery();
 
             return datesEqual(rs, customer);
 

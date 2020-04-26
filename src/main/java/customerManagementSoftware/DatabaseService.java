@@ -3,12 +3,18 @@ package customerManagementSoftware;
 import javax.swing.plaf.nimbus.State;
 import java.sql.*;
 
+import com.mysql.cj.protocol.Resultset;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class DatabaseService implements IDatabaseService {
 
+    Connection conn = null;
+    Statement stmt = null;
+    ResultSet rs = null;
+    Logger logger = LoggerFactory.getLogger("");
 
     public void initDatabase(String databaseName) throws SQLException, ClassNotFoundException {
-        Connection conn = null;
-        Statement stmt = null;
         Class.forName("com.mysql.cj.jdbc.Driver");
         conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/?user=root&password=example&useLegacyDatetimeCode=false&serverTimezone=UTC");
         stmt = conn.createStatement();
@@ -20,7 +26,7 @@ public class DatabaseService implements IDatabaseService {
             String databaseList = rs.getString(1);
             if (databaseList.equals(databaseName)) {
                 dataBaseExists = true;
-                System.out.println("Existiert bereits");
+                logger.info("Datenbank " + databaseName + " existiert bereits");
             }
         }
         rs.close();
@@ -29,19 +35,17 @@ public class DatabaseService implements IDatabaseService {
             String sql = "CREATE DATABASE $databaseName";
             String query = sql.replace("$databaseName", databaseName);
             stmt.executeUpdate(query);
-            System.out.println("Creating database...");
-            System.out.println("Database " + databaseName + " created successfully...");
+            logger.info("Creating database...");
+            logger.info("Database " + databaseName + " created successfully...");
         }
 
     }
 
     @Override
     public void dropDatabase(String databaseName) throws SQLException {
-
-        Connection conn = connectToDatabase(databaseName);
+        conn = connectToDatabase(databaseName);
         String sql = "DROP DATABASE $database";
         String query = sql.replace("$database", databaseName);
-        Statement stmt = null;
         stmt = conn.createStatement();
         ResultSet rs = conn.getMetaData().getCatalogs();
 
@@ -58,13 +62,12 @@ public class DatabaseService implements IDatabaseService {
 
     @Override
     public Connection connectToDatabase(String dataBaseName) {
-        Statement stmt = null;
-        Connection conn = null;
+
         try {   Class.forName("com.mysql.cj.jdbc.Driver");
                 conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/" + dataBaseName + "?user=root&password=example&useLegacyDatetimeCode=false&serverTimezone=UTC");
                 stmt = conn.createStatement();
 
-        } catch (SQLException | ClassNotFoundException e) {
+        } catch (SQLException | ClassNotFoundException | NullPointerException  e) {
             throw new Error("Datenbank nicht vorhanden");
         } finally {
             try {
@@ -72,7 +75,7 @@ public class DatabaseService implements IDatabaseService {
                     stmt.close();
                 }
             } catch (SQLException ex) {
-                System.out.println(ex.getMessage());
+                throw new Error("Datenbank nicht vorhanden");
             }
         }
         return conn;
@@ -86,11 +89,10 @@ public class DatabaseService implements IDatabaseService {
     }
 
     public boolean dataBaseExists(String databaseName) throws ClassNotFoundException, SQLException {
-        Connection conn = null;
         Class.forName("com.mysql.cj.jdbc.Driver");
         conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/?user=root&password=example&useLegacyDatetimeCode=false&serverTimezone=UTC");
 
-        ResultSet rs = conn.getMetaData().getCatalogs();
+        rs = conn.getMetaData().getCatalogs();
         boolean dataBaseExists = false;
 
         while (rs.next()) {

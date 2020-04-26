@@ -10,7 +10,7 @@ public class SqlCustomerServiceTest {
     SqlCustomerService sqlCustomerService = new SqlCustomerService();
     Customer customer1 = new Customer("Gantzert", "Sebastian", "Auf der Schmelz", "30", "64380");
     Customer customer2 = new Customer("Jüttner", "Thomas", "Lessingstraße", "9", "64283");
-    Customer customer12 = new Customer("Schwarck", "Martin", "Keineahnung", "11", "42380");
+    Customer customer3 = new Customer("Schwarck", "Martin", "Keineahnung", "11", "42380");
     DatabaseService database1 = new DatabaseService();
 
     @Test
@@ -31,15 +31,17 @@ public class SqlCustomerServiceTest {
     public void insertCustomerTest() throws SQLException {
         sqlCustomerService.insertCustomer(customer1, "KUNDEN", "Kunden");
         sqlCustomerService.insertCustomer(customer2, "KUNDEN", "Kunden");
-        boolean customerDates = sqlCustomerService.checkCustomerDates("KUNDEN", "Kunden", customer12);
-        Assertions.assertTrue(customerDates);
+        sqlCustomerService.insertCustomer(customer3, "KUNDEN", "Kunden");
+        boolean customerExists = sqlCustomerService.customerExists("KUNDEN", "Kunden", customer1);
+        Assertions.assertTrue(customerExists);
     }
 
 
     @Test
     public void deleteCustomerTest() throws SQLException {
+        sqlCustomerService.deleteCustomer(customer1, "KUNDEN", "Kunden");
         sqlCustomerService.deleteCustomer(customer2, "KUNDEN", "Kunden");
-        boolean customerExists = sqlCustomerService.customerExists("KUNDEN", "Kunden", customer1);
+        boolean customerExists = sqlCustomerService.customerExists("KUNDEN", "Kunden", customer2);
         Assertions.assertFalse(customerExists);
     }
 

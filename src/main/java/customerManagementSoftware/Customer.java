@@ -18,11 +18,19 @@ public class Customer {
         ++count;
         this.id = uuid;
         this.customerNumber = String.format("%04d", count);
-        this.name = name;
-        this.firstName = firstName;
-        this.street = street;
-        this.houseNumber = houseNumber;
+        this.name = rightPad(name, 10);
+        this.firstName = rightPad(firstName, 10);
+        this.street = rightPad(street, 20);
+        this.houseNumber = rightPad(houseNumber, 3);
         this.postalCode = postalCode;
+    }
+
+    private String rightPad(String text, int length) {
+        return String.format("%-" + length + "." + length + "s", text);
+    }
+
+    public static String fixedLengthString(String string, int length) {
+        return String.format("%1$"+length+ "s", string);
     }
 
     public void setName(String name) {
