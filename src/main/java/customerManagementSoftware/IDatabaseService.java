@@ -8,5 +8,8 @@ public interface IDatabaseService {
 
     Connection connectToDatabase(String dataBaseName);
     void closeConnection(Connection conn) throws SQLException;
+    void initDatabase(String databaseName) throws SQLException, ClassNotFoundException;
+    void dropDatabase(String databaseName) throws SQLException;
+
 
 }

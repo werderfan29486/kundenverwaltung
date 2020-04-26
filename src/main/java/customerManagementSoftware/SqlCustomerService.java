@@ -139,6 +139,7 @@ public class SqlCustomerService implements ISqlCustomerService {
         preparedStmt.execute();
         preparedStmt.close();
     }
+    
     public String insertStatement(String tablename) {
 
         String strQuery = " insert into $tableName (customernumber, name, firstname, street, housenumber, postalcode)"

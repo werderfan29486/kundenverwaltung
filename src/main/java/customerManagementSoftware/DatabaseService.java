@@ -1,17 +1,59 @@
 package customerManagementSoftware;
 
+import javax.swing.plaf.nimbus.State;
 import java.sql.*;
 
 public class DatabaseService implements IDatabaseService {
 
 
-    public void initDatabase(Connection conn) throws SQLException {
+    public void initDatabase(String databaseName) throws SQLException, ClassNotFoundException {
+        Connection conn = null;
         Statement stmt = null;
-        System.out.println("Creating database...");
+        Class.forName("com.mysql.cj.jdbc.Driver");
+        conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/?user=root&password=example&useLegacyDatetimeCode=false&serverTimezone=UTC");
         stmt = conn.createStatement();
-        String sql = "CREATE DATABASE KUNDEN";
-        stmt.executeUpdate(sql);
-        System.out.println("Database created successfully...");
+
+        ResultSet rs = conn.getMetaData().getCatalogs();
+        boolean dataBaseExists = false;
+
+        while (rs.next()) {
+            String databaseList = rs.getString(1);
+            if (databaseList.equals(databaseName)) {
+                dataBaseExists = true;
+                System.out.println("Existiert bereits");
+            }
+        }
+        rs.close();
+
+        if (!dataBaseExists) {
+            String sql = "CREATE DATABASE $databaseName";
+            String query = sql.replace("$databaseName", databaseName);
+            stmt.executeUpdate(query);
+            System.out.println("Creating database...");
+            System.out.println("Database " + databaseName + " created successfully...");
+        }
+
+    }
+
+    @Override
+    public void dropDatabase(String databaseName) throws SQLException {
+
+        Connection conn = connectToDatabase(databaseName);
+        String sql = "DROP DATABASE $database";
+        String query = sql.replace("$database", databaseName);
+        Statement stmt = null;
+        stmt = conn.createStatement();
+        ResultSet rs = conn.getMetaData().getCatalogs();
+
+        while (rs.next()) {
+            String databaseList = rs.getString(1);
+            if (databaseList.equals(databaseName)) {
+                stmt.executeUpdate(query);
+            }
+        }
+        rs.close();
+        stmt.close();
+        conn.close();
     }
 
     @Override
@@ -21,24 +63,9 @@ public class DatabaseService implements IDatabaseService {
         try {   Class.forName("com.mysql.cj.jdbc.Driver");
                 conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/" + dataBaseName + "?user=root&password=example&useLegacyDatetimeCode=false&serverTimezone=UTC");
                 stmt = conn.createStatement();
-            ResultSet resultSet = conn.getMetaData().getCatalogs();
-            boolean dataBaseExists = false;
-
-            while (resultSet.next()) {
-
-                String databaseList = resultSet.getString(1);
-                if(databaseList.equals(dataBaseName)) {
-                    dataBaseExists = true;
-                }
-
-            }
-            resultSet.close();
-            if (!dataBaseExists) {
-                initDatabase(conn);
-            }
 
         } catch (SQLException | ClassNotFoundException e) {
-            throw new Error("Problem", e);
+            throw new Error("Datenbank nicht vorhanden");
         } finally {
             try {
                 if (stmt != null) {
@@ -56,5 +83,27 @@ public class DatabaseService implements IDatabaseService {
         if (conn != null) {
             conn.close();
         }
+    }
+
+    public boolean dataBaseExists(String databaseName) throws ClassNotFoundException, SQLException {
+        Connection conn = null;
+        Class.forName("com.mysql.cj.jdbc.Driver");
+        conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/?user=root&password=example&useLegacyDatetimeCode=false&serverTimezone=UTC");
+
+        ResultSet rs = conn.getMetaData().getCatalogs();
+        boolean dataBaseExists = false;
+
+        while (rs.next()) {
+            String databaseList = rs.getString(1);
+            if (databaseList.equals(databaseName)) {
+                dataBaseExists = true;
+            }
+        }
+        rs.close();
+
+        if (!dataBaseExists) {
+            return false;
+        }
+        return true;
     }
 }
