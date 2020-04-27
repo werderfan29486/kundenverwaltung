@@ -29,10 +29,6 @@ public class Customer {
         return String.format("%-" + length + "." + length + "s", text);
     }
 
-    public static String fixedLengthString(String string, int length) {
-        return String.format("%1$"+length+ "s", string);
-    }
-
     public void setName(String name) {
         this.name = name;
     }

@@ -11,21 +11,6 @@ public class SqlCustomerServiceTest {
     Customer customer1 = new Customer("Gantzert", "Sebastian", "Auf der Schmelz", "30", "64380");
     Customer customer2 = new Customer("Jüttner", "Thomas", "Lessingstraße", "9", "64283");
     Customer customer3 = new Customer("Schwarck", "Martin", "Keineahnung", "11", "42380");
-    DatabaseService database1 = new DatabaseService();
-
-    @Test
-    public void createTableTest() throws SQLException {
-        sqlCustomerService.createTable("KUNDEN", "Kunden");
-        boolean tableExists = sqlCustomerService.tableExists("KUNDEN", "Kunden");
-        Assertions.assertTrue(tableExists);
-    }
-
-    @Test
-    public void deleteTableTest() throws SQLException {
-        sqlCustomerService.deleteTable("KUNDEN", "Kunden");
-        boolean tableExists = sqlCustomerService.tableExists("KUNDEN", "Kunden");
-        Assertions.assertFalse(tableExists);
-    }
 
     @Test
     public void insertCustomerTest() throws SQLException {
@@ -39,7 +24,7 @@ public class SqlCustomerServiceTest {
 
     @Test
     public void deleteCustomerTest() throws SQLException {
-        sqlCustomerService.deleteCustomer(customer1, "KUNDEN", "Kunden");
+        //sqlCustomerService.deleteCustomer(customer1, "KUNDEN", "Kunden");
         sqlCustomerService.deleteCustomer(customer2, "KUNDEN", "Kunden");
         boolean customerExists = sqlCustomerService.customerExists("KUNDEN", "Kunden", customer2);
         Assertions.assertFalse(customerExists);
@@ -50,12 +35,6 @@ public class SqlCustomerServiceTest {
         sqlCustomerService.updateCustomer(customer1, "KUNDEN", "Kunden", "firstname", "Alex");
         String updatedValue = sqlCustomerService.checkUpdatedValue("KUNDEN", "Kunden", customer1, "firstname");
         Assertions.assertEquals("Alex", updatedValue);
-    }
-
-    @Test
-    public void tableExistsTest() throws SQLException {
-        boolean tableExists = sqlCustomerService.tableExists("KUNDEN", "Kunden");
-        Assertions.assertTrue(tableExists);
     }
 
     @Test
@@ -72,11 +51,7 @@ public class SqlCustomerServiceTest {
 
     @Test
     public void printAllCustomersTest() throws SQLException {
-        sqlCustomerService.printAllCustomers("KUNDEN", "Kunden");
+        sqlCustomerService.showAllCustomers("KUNDEN", "Kunden");
     }
 
-    @Test
-    public void printTablesInDatabaseTest() throws SQLException {
-        sqlCustomerService.printTablesInDatabase("KUNDEN");
-    }
 }

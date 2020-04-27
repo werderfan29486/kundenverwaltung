@@ -11,5 +11,4 @@ public interface IDatabaseService {
     void initDatabase(String databaseName) throws SQLException, ClassNotFoundException;
     void dropDatabase(String databaseName) throws SQLException;
 
-
 }
