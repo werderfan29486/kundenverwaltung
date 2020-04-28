@@ -19,6 +19,8 @@ public class TableServiceTest {
     @Test
     public void createReferenceTableTest() throws SQLException {
         tableService.createReferenceTable("KUNDEN", "Termine", "Kunden");
+        boolean tableExists = tableService.tableExists("KUNDEN", "Termine");
+        Assertions.assertTrue(tableExists);
     }
 
     @Test

@@ -79,7 +79,7 @@ public class SqlCustomerService implements ISqlCustomerService {
     @Override
     public void showAllCustomers(String databaseName, String tableName) throws SQLException {
         conn = database1.connectToDatabase(databaseName);
-        logger.info("Kundennummer" + "\t" + "Name" +"\t\t"+ "Firstname"+"\t"+ "Street"+ "\t\t\t\t" + "Housenumber" + "\t\t" + "Postalcode");
+        logger.info("UID" + "\t" + "Kundennummer" + "\t" + "Name" +"\t\t"+ "Firstname"+"\t"+ "Street"+ "\t\t\t\t" + "Housenumber" + "\t\t" + "Postalcode");
         printColumns(conn, tableName);
         conn.close();
     }
@@ -158,6 +158,7 @@ public class SqlCustomerService implements ISqlCustomerService {
         String query =strQuery.replace("$tableName",tableName);
         rs = stmt.executeQuery(query);
         while (rs.next()) {
+            String columnUID = rs.getString("UID");
             String columnName1 = rs.getString("Customernumber");
             String columnName2 = rs.getString("Name");
             String columnName3 = rs.getString("Firstname");
@@ -165,7 +166,7 @@ public class SqlCustomerService implements ISqlCustomerService {
             String columnName5 = rs.getString("Housenumber");
             String columnName6 = rs.getString("Postalcode");
 
-            logger.info(columnName1 + "\t\t\t" + columnName2 + "\t" + columnName3 + "\t" + columnName4 + "" + columnName5 + "\t\t\t\t" + columnName6);
+            logger.info(columnUID + "\t" + columnName1 + "\t\t\t" + columnName2 + "\t" + columnName3 + "\t" + columnName4 + "" + columnName5 + "\t\t\t\t" + columnName6);
         }
         stmt.close();
         rs.close();

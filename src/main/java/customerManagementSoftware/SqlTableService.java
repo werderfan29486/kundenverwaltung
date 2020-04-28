@@ -9,7 +9,6 @@ public class SqlTableService implements ISqlTableService {
 
     DatabaseService database1 = new DatabaseService();
     Connection conn = null;
-    Statement stmt = null;
     PreparedStatement preparedStmt = null;
     Logger logger = LoggerFactory.getLogger("");
     ResultSet rs = null;
@@ -24,7 +23,7 @@ public class SqlTableService implements ISqlTableService {
         }
 
         catch (SQLException e) {
-            logger.info("Datenbank " + tableName + " existiert bereits");
+            logger.info("Tabelle " + tableName + " existiert bereits");
         }
         finally {
             conn.close();
@@ -41,7 +40,7 @@ public class SqlTableService implements ISqlTableService {
         }
 
         catch (SQLException e) {
-            logger.info("Datenbank " + tableName + " existiert bereits");
+            logger.info("Tabelle " + tableName + " existiert bereits");
         }
         finally {
             conn.close();
@@ -98,12 +97,9 @@ public class SqlTableService implements ISqlTableService {
     private static final String CREATE_TABLE_CUSTOMERDATES = "CREATE TABLE $tableName ("
             + "DATE_ID INT NOT NULL AUTO_INCREMENT, "
             + "UID INT, "
-            + "DOB DATE NOT NULL,"
-            + "PRIMARY KEY (DATE_ID)), "
-            + "CONSTRAINT fk_uid FOREIGN KEY (UID) REFERENCES $referencetable(UID)";
-            //+  "ON DELETE CASCADE"
-            //+  "ON UPDATE CASCADE";
-            // "FOREIGN KEY (UID) REFERENCES $referencetable(UID)";
+            + "DATE SMALLDATETIME,"
+            + "PRIMARY KEY (DATE_ID), "
+            + "CONSTRAINT fk_uid FOREIGN KEY (UID) REFERENCES $referencetable(UID))";
 
     //HELPMETHODS for test classes
 
