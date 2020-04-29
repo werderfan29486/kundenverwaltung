@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import java.sql.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
 
 public class SqlDateService {
 
@@ -19,26 +20,19 @@ public class SqlDateService {
 
     public void addDate(String databaseName, String tableName, int customerUID, String date) throws SQLException, ParseException {
         conn = database1.connectToDatabase(databaseName);
-        Date date1 = createDate(date);
 
         preparedStmt = conn.prepareStatement(insertDate(tableName));
         preparedStmt.setInt(1, customerUID);
-        preparedStmt.setDate(2, date1);
+        preparedStmt.setTimestamp(2, java.sql.Timestamp.valueOf(date));
+        preparedStmt.execute();
 
         preparedStmt.close();
         conn.close();
     }
 
-    public Date createDate(String date) throws ParseException {
-        String input = "06/10/2013 18:29:09";
-        SimpleDateFormat sdf = new SimpleDateFormat("MM-dd-yyyy hh:mm:ss");
-        java.util.Date dt = sdf.parse(date);
-        java.sql.Date dtSql = new java.sql.Date(dt.getTime());
-        return dtSql;
-    }
 
     private static String insertDate(String tableName) {
-        String query = " insert into $tableName (uid, date)"
+        String query = " insert into $tableName (UID, dt)"
                 + " values (?, ?)";
         return query.replace("$tableName", tableName);
     }
@@ -64,6 +58,7 @@ public class SqlDateService {
             }
             stmt.close();
             rs.close();
+            conn.close();
         }
     }
 

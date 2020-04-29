@@ -97,7 +97,7 @@ public class SqlTableService implements ISqlTableService {
     private static final String CREATE_TABLE_CUSTOMERDATES = "CREATE TABLE $tableName ("
             + "DATE_ID INT NOT NULL AUTO_INCREMENT, "
             + "UID INT, "
-            + "DATE SMALLDATETIME,"
+            + "dt SMALLDATETIME NOT NULL, "
             + "PRIMARY KEY (DATE_ID), "
             + "CONSTRAINT fk_uid FOREIGN KEY (UID) REFERENCES $referencetable(UID))";
 
